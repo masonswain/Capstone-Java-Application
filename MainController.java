@@ -39,8 +39,8 @@ public class MainController { // Our MainController class.
             String inputFromURL = null;
             String username = UserNameTextField.getText();
             String password = PasswordTextField.getText();
-            String fName="";
-            String lName="";
+            String fName= "";
+            String lName= "";
             boolean authenticated = false;
             int startPt=0;
             int endPt=0;
@@ -50,7 +50,7 @@ public class MainController { // Our MainController class.
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
             //Example GET Request URL
             //http://csc450.joelknutson.net/authenticate.php?un=jknutson&authpw=12345
-            String url = "http://csc450.joelknutson.net/authenticate.php?un="+username+"&authpw="+password;
+            String url = "http://csc450.joelknutson.net/authenticate.php?un=" + username + "&authpw=" + password;
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -89,8 +89,9 @@ public class MainController { // Our MainController class.
             
             
 		if(authenticated) { 
-			
-			lblAuthentication.setText("Welcome " + fName + lName); // Displays to user that login was successful
+                    
+			                          
+			lblAuthentication.setText("Welcome "+ fName + " " + lName); // Made change to spacing. It should display the spacing of the firstname and lastname
 			
 			Stage primaryStage = new Stage();
 			
