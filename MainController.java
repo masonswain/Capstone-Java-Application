@@ -32,6 +32,8 @@ public class MainController { // Our MainController class.
 	@FXML
 	private TextField PasswordTextField; // Our PasswordTextField
        
+        @FXML
+	private TextField emailAddressTextField; // Our PasswordTextField
 	
         // Login Method
 	public void Login(ActionEvent e) throws Exception {
@@ -39,8 +41,10 @@ public class MainController { // Our MainController class.
             String inputFromURL = null;
             String username = UserNameTextField.getText();
             String password = PasswordTextField.getText();
+            String emailAddress = emailAddressTextField.getText();
             String fName= "";
             String lName= "";
+            String email= ""; // Added email field
             boolean authenticated = false;
             int startPt=0;
             int endPt=0;
@@ -50,7 +54,7 @@ public class MainController { // Our MainController class.
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
             //Example GET Request URL
             //http://csc450.joelknutson.net/authenticate.php?un=jknutson&authpw=12345
-            String url = "http://csc450.joelknutson.net/authenticate.php?un=" + username + "&authpw=" + password;
+            String url = "http://csc450.joelknutson.net/authenticate.php?un=" + username + "&authpw=" + password + emailAddress;
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -76,12 +80,12 @@ public class MainController { // Our MainController class.
             authenticated=true;
             fName=inputFromURL.substring(startPt, commaPt);
             lName=inputFromURL.substring(commaPt+1, endPt);
-            
+            emailAddress=inputFromURL.substring(commaPt+2, endPt);
             //Create user object
-            user loggedInUser = new user(fName,lName);
+            user loggedInUser = new user(fName,lName,emailAddress);
             
             //Debugging Line - output object variables to prove object creation and variable assignment
-            System.out.println("Welcome " + loggedInUser.getfName()+ " " + loggedInUser.getlName());
+            System.out.println("Welcome " + loggedInUser.getfName()+ " " + loggedInUser.getlName() +  " " + loggedInUser.getemailAddress());
             }
             else{
                 System.out.println("Authentication Failed");
@@ -91,7 +95,7 @@ public class MainController { // Our MainController class.
 		if(authenticated) { 
                     
 			                          
-			lblAuthentication.setText("Welcome "+ fName + " " + lName); // Made change to spacing. It should display the spacing of the firstname and lastname
+			lblAuthentication.setText("Welcome "+ fName + " " + lName + " " + emailAddress); // Made change to spacing. It should display the spacing of the firstname and lastname
 			
 			Stage primaryStage = new Stage();
 			
