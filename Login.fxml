@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="369.0" style="-fx-background-color: red; -fx-background-insets: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <Button layoutX="116.0" layoutY="357.0" mnemonicParsing="false" onAction="#Login" prefHeight="39.0" prefWidth="94.0" style="-fx-background-insets: white;" text="Login">
+      <Button layoutX="118.0" layoutY="397.0" mnemonicParsing="false" onAction="#Login" prefHeight="39.0" prefWidth="94.0" style="-fx-background-insets: white;" text="Login">
          <font>
             <Font size="18.0" />
          </font>
@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Label fx:id="lblAuthentication" layoutX="38.0" layoutY="294.0" prefHeight="17.0" prefWidth="253.0" text="Authentication" textFill="#252323">
+      <Label fx:id="lblAuthentication" layoutX="38.0" layoutY="328.0" prefHeight="17.0" prefWidth="253.0" text="Authentication" textFill="#252323">
          <font>
             <Font size="18.0" />
          </font>
@@ -34,6 +34,11 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="emailAddressTextField" layoutX="38.0" layoutY="277.0" promptText="Email" style="-fx-background-color: white;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
      
    </children>
 </AnchorPane>
