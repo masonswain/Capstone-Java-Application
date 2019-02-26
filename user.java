@@ -13,10 +13,15 @@ public class user {
     
     public String fName=null;
     public String lName=null;
+    public String emailAddress=null;
+    public String message=null;
     
-    public user(String fName, String lName){
+    
+    public user(String fName, String lName, String emailAddress, String message){
     this.fName=fName;
     this.lName=lName;
+    this.emailAddress=emailAddress;
+    this.message=message;
     }
     
     public String getfName(){
@@ -25,5 +30,12 @@ public class user {
     public String getlName(){
     return lName;
     }
-    
+ 
+    public String getemailAddress(){
+    return emailAddress;
+    }
+
+    public String getMessage(){
+    return message;
+    }
 }

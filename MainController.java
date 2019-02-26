@@ -44,7 +44,8 @@ public class MainController { // Our MainController class.
             String emailAddress = emailAddressTextField.getText();
             String fName= "";
             String lName= "";
-            String email= ""; // Added email field
+            String email= ""; // Added email
+            String message= ""; // Added message
             boolean authenticated = false;
             int startPt=0;
             int endPt=0;
@@ -81,11 +82,12 @@ public class MainController { // Our MainController class.
             fName=inputFromURL.substring(startPt, commaPt);
             lName=inputFromURL.substring(commaPt+1, endPt);
             emailAddress=inputFromURL.substring(commaPt+2, endPt);
+            message=inputFromURL.substring(commaPt+3, endPt);
             //Create user object
-            user loggedInUser = new user(fName,lName,emailAddress);
+            user loggedInUser = new user(fName,lName,emailAddress,message);
             
             //Debugging Line - output object variables to prove object creation and variable assignment
-            System.out.println("Welcome " + loggedInUser.getfName()+ " " + loggedInUser.getlName() +  " " + loggedInUser.getemailAddress());
+            System.out.println("Welcome " + loggedInUser.getfName()+ " " + loggedInUser.getlName() +  " " + loggedInUser.getemailAddress() + " " + loggedInUser.getMessage());
             }
             else{
                 System.out.println("Authentication Failed");
@@ -95,7 +97,7 @@ public class MainController { // Our MainController class.
 		if(authenticated) { 
                     
 			                          
-			lblAuthentication.setText("Welcome "+ fName + " " + lName + " " + emailAddress); // Made change to spacing. It should display the spacing of the firstname and lastname
+			lblAuthentication.setText("Welcome "+ fName + " " + lName + " " + emailAddress + " " + message); // Made change to spacing. It should display the spacing of the firstname and lastname
 			
 			Stage primaryStage = new Stage();
 			
