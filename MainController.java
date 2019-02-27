@@ -17,6 +17,8 @@ import javafx.scene.Scene; // This is our Scene class.
 
 import javafx.scene.control.Label; // This is our Label class.
 
+import javafx.scene.control.TextArea; // This is our TextArea class.
+
 import javafx.scene.control.TextField; // This is our TextField class.
 
 import javafx.stage.Stage; // This is our Stage class.
@@ -33,7 +35,10 @@ public class MainController { // Our MainController class.
 	private TextField PasswordTextField; // Our PasswordTextField
        
         @FXML
-	private TextField emailAddressTextField; // Our PasswordTextField
+	private TextField emailAddressTextField; // Our emailAddresTextField
+        
+        @FXML
+	private TextArea messageTextArea; // Our emailAddresTextField
 	
         // Login Method
 	public void Login(ActionEvent e) throws Exception {
@@ -44,8 +49,8 @@ public class MainController { // Our MainController class.
             String emailAddress = emailAddressTextField.getText();
             String fName= "";
             String lName= "";
-            String email= ""; // Added email
-            String message= ""; // Added message
+            String email= ""; // Added email to user form
+            String message= ""; // Added message to user form
             boolean authenticated = false;
             int startPt=0;
             int endPt=0;
@@ -55,7 +60,7 @@ public class MainController { // Our MainController class.
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
             //Example GET Request URL
             //http://csc450.joelknutson.net/authenticate.php?un=jknutson&authpw=12345
-            String url = "http://csc450.joelknutson.net/authenticate.php?un=" + username + "&authpw=" + password + emailAddress;
+            String url = "http://csc450.joelknutson.net/authenticate.php?un=" + username + "&authpw=" + password + emailAddress + message;
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
