@@ -13,10 +13,21 @@ public class user {
     
     public String fName=null;
     public String lName=null;
+    public boolean authenticated=false;
+    
+    public user(){
+    
+    }
     
     public user(String fName, String lName){
     this.fName=fName;
     this.lName=lName;
+    }
+    
+    public user(String fName, String lName, boolean authenticated){
+    this.fName=fName;
+    this.lName=lName;
+    this.authenticated=authenticated;
     }
     
     public String getfName(){
