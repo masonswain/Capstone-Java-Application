@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewTicketsController">
+   <children>
+      <AnchorPane layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: MAROON;">
+         <children>
+            <Polygon fill="DODGERBLUE" layoutX="273.0" layoutY="-103.0" points="29.0, 40.0, 50.0, 40.0, 38.0, 65.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#d4da1d" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+            <Circle fill="RED" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+         </children>
+         <effect>
+            <ColorAdjust />
+         </effect>
+      </AnchorPane>
+      <Label fx:id="viewTickets" layoutX="14.0" layoutY="99.0" prefHeight="17.0" prefWidth="143.0" text="Active Tickets" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: MAROON;">
+         <children>
+            <Label alignment="CENTER" layoutX="28.0" layoutY="5.0" prefHeight="27.0" prefWidth="231.0" text="South St. Paul Schools" textFill="#f8f8f8">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnOpenTicket" layoutX="46.0" layoutY="61.0" mnemonicParsing="false" onAction="#gotoOpenTicket" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Open Ticket" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnCancel" layoutX="162.0" layoutY="61.0" mnemonicParsing="false" onAction="#gotoWidgetExpanded" onMouseClicked="#ExpandWidget" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Cancel" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label alignment="CENTER" layoutX="58.0" layoutY="35.0" prefHeight="16.0" prefWidth="76.0" text="Ticket(s) Open" textFill="#f8f8f8">
+               <font>
+                  <Font name="Arial Bold" size="10.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="171.0" layoutY="35.0" prefHeight="16.0" prefWidth="92.0" text="Messages Waiting" textFill="#f8f8f8">
+               <font>
+                  <Font name="Arial Bold" size="10.0" />
+               </font>
+            </Label>
+            <TextArea layoutX="38.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="20.0" style="-fx-background-color: MAROON; -fx-region-background: MAROON;" text="0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </TextArea>
+            <TextArea layoutX="150.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="20.0" style="-fx-background-color: MAROON; -fx-region-background: MAROON;" text="0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </TextArea>
+            <Polygon fill="DODGERBLUE" layoutX="273.0" layoutY="-103.0" points="29.0, 40.0, 50.0, 40.0, 38.0, 65.0" stroke="BLACK" strokeType="INSIDE" />
+            <Polygon fx:id="btnCollapse" fill="WHITE" layoutX="243.0" layoutY="-30.0" onMouseClicked="#gotoWidgetCollapsed" points="43.5, 33.0, 51.75, 50.25, 36.5, 50.25" rotate="180.0" stroke="#511616" strokeType="INSIDE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Polygon>
+            <Circle fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fill="#d4da1d" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+            <Circle fill="RED" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+         </children>
+         <effect>
+            <ColorAdjust />
+         </effect>
+      </AnchorPane>
+      <VBox layoutX="14.0" layoutY="127.0" prefHeight="263.0" prefWidth="276.0">
+         <children>
+            <Button fx:id="btnTicketExample" mnemonicParsing="false" onAction="#gotoViewTicketComment" prefHeight="20.0" prefWidth="287.0" style="-fx-background-color: MAROON;" text="9/24/18     |    Student cant login                 " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
