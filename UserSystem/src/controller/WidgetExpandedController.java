@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -35,6 +37,10 @@ public class WidgetExpandedController implements Initializable {
     private Button btnOpenTicket;
     @FXML
     private Polygon btnCollapse;
+    @FXML
+    private Label lblMessagesWaiting;
+    @FXML
+    private Label lblTicketsOpen;
 
     /**
      * Initializes the controller class.
@@ -42,6 +48,7 @@ public class WidgetExpandedController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        lblTicketsOpen.setText(Main.activeTicketCount);
     }    
 
     @FXML

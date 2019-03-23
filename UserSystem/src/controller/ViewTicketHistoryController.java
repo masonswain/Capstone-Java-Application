@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -37,6 +39,10 @@ public class ViewTicketHistoryController implements Initializable {
     private Polygon btnCollapse;
     @FXML
     private Button btnBack;
+    @FXML
+    private Label lblMessagesWaiting;
+    @FXML
+    private Label lblTicketsOpen;
 
     /**
      * Initializes the controller class.
@@ -44,6 +50,7 @@ public class ViewTicketHistoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        lblTicketsOpen.setText(Main.activeTicketCount);
     }    
 
 

@@ -5,9 +5,15 @@
  */
 package controller;
 
+import application.Main;
+import application.Ticket;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +44,10 @@ public class ViewTicketsController implements Initializable {
     private Button btnCancel;
     @FXML
     private Polygon btnCollapse;
+    @FXML
+    private Label lblTicketsOpen;
+    
+    private ArrayList<Ticket> ticketList;
 
     /**
      * Initializes the controller class.
@@ -46,6 +56,12 @@ public class ViewTicketsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         viewTickets.setText("Changed");
+        lblTicketsOpen.setText(Main.activeTicketCount);
+        try {
+           communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewTicketsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     @FXML

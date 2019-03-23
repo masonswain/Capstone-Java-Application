@@ -14,6 +14,7 @@ public class user {
     public String fName=null;
     public String lName=null;
     public boolean authenticated=false;
+    public String uName;
     
     public user(){
     

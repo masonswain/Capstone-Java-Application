@@ -1,6 +1,7 @@
 package application; // Application package
 	
 
+import java.util.ArrayList;
 import javafx.application.Application; // Application class
 import javafx.fxml.FXMLLoader; // FXMLLoader class
 import javafx.geometry.Rectangle2D;
@@ -12,13 +13,15 @@ import javafx.stage.StageStyle;
 
 
 public class Main extends Application { // Main class extends Application
-
+    
+    public static user currentUser;
+    public static ArrayList<Ticket> ticketList;
+    public static String activeTicketCount="0";
+    public static String unreadMessageCount="0";
     
     @Override
     public void start(Stage primaryStage) { // Start method
-	
         
-	
         // Using try-catch block to check login system for Javafx
 	try {
 			

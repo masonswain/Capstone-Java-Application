@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.Main;
 import application.communicate;
 import application.user;
 import java.net.URL;
@@ -52,16 +53,18 @@ public void Login(ActionEvent event) throws Exception {
     //////////////////////     Credential Entry Bypass     //////////////////////////    
 
         //comment this line out to bypass credential entry
-        //user user1 = auth.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
+        //Main.currentUser = communicate.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
         
         //uncomment this line to bypass credential entry
-        user user1 = communicate.authenticate("jknutson","12345");
+        Main.currentUser = communicate.authenticate("jknutson","12345");
         
     //////////////////////   End Credential Entry Bypass   ////////////////////////// 
         
-        if(user1.authenticated) { 
-		
+        if(Main.currentUser.authenticated) { 
             
+            //Update Ticket List
+            Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+            //Load New Scene
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); // loads main fxml class
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
