@@ -29,18 +29,19 @@ authenticate takes a username and password as a string and sends it
 via POST to a PHP script that determines whether the credentials are correct
 */
     
-    public static user authenticate(String uname, String pw) throws IOException{
+    public static user authenticate(String uName, String pw) throws IOException{
     
-    String inputFromURL = null;
-            String username = uname;
-            String password = pw;
-            String fName="";
-            String lName="";
+            String inputFromURL = null;
+            String fName;
+            String lName;
+            String isAdmin="U";
+            
             boolean authenticated = false;
-            int startPt=0;
-            int endPt=0;
-            int commaPt=0;
-            user loggedInUser = new user(fName, lName);
+            
+            int startSub=0;
+            int endSub=0;
+            
+            user loggedInUser = new user();
             
             //Reference to Sending GET Request and returning data
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
@@ -51,7 +52,7 @@ via POST to a PHP script that determines whether the credentials are correct
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             conn.setRequestMethod("POST");
            
-            String urlParameters= "un="+username+"&authpw="+password;
+            String urlParameters= "un="+uName+"&authpw="+pw;
             
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -74,30 +75,44 @@ via POST to a PHP script that determines whether the credentials are correct
             //Debugging Line - server response text (this is the string that is parsed
             System.out.println("Server Response: "+response.toString());
             
-            inputFromURL=response.toString();
-            startPt=inputFromURL.indexOf("<body>")+6;
-            endPt=inputFromURL.indexOf("</body>");
-            commaPt=inputFromURL.indexOf(",", startPt);
-            
+            String serverResponse=response.toString();
+
             //Debugging Line - output the location of the comma or -1 if not found
             //System.out.println("Comma Point: "+commaPt);
+
+            if(!serverResponse.contains("Authentication Failed")){
+    
             
-            //Parse the string returned by the server as long as a comma it found
-            if(commaPt != -1){
-            authenticated=true;
-            fName=inputFromURL.substring(startPt, commaPt);
-            lName=inputFromURL.substring(commaPt+1, endPt);
+            //Find fName information
+            startSub = serverResponse.indexOf("fName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            fName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("First Name: "+fName);
+            
+            //Find lName information
+            startSub = serverResponse.indexOf("lName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            lName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Last Name: "+lName);
+            
+            //Find isAdmin information
+            startSub = serverResponse.indexOf("isAdmin: ",startSub)+9;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            isAdmin = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Admin: "+isAdmin);
             
             //update user object
             loggedInUser.fName = fName;
             loggedInUser.lName = lName;
-            loggedInUser.uName = uname;
-            loggedInUser.authenticated = true;
+            loggedInUser.uName = uName;
+            loggedInUser.isAdmin = isAdmin.equalsIgnoreCase("Y");
+            loggedInUser.authenticated = (fName!=null);
             
             //Debugging Line - output object variables to prove object creation and variable assignment
-            System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
-            
-            return loggedInUser;
+            //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
             
             }
             else{
@@ -105,11 +120,10 @@ via POST to a PHP script that determines whether the credentials are correct
             }
             
             return loggedInUser;
-		
         
     }
     
-    // Returns all the active list of Tickets associated with a tech
+    // Returns all the active list of Tickets associated with a tech username
     public static ArrayList<Ticket> updateAllActiveTechTickets(String techUN) throws IOException {	
         
         /////////////    VARIABLES    /////////////////
@@ -234,6 +248,57 @@ via POST to a PHP script that determines whether the credentials are correct
             
         
         return ticketList;
+    }
+    
+    public static void createTicket(String building, String room, String phone, String description) throws IOException{
+    
+            String inputFromURL = null;
+            String userUN = Main.currentUser.getuName();
+            
+            
+            //Reference to Sending GET Request and returning data
+            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+            //Example GET/POST Request URL
+            String url = "http://csc450.joelknutson.net/create-ticket.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+           
+            String urlParameters= "ticketTitle="+description+"&techUN=unassigned"+"&userUN="+Main.currentUser.getuName()+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+response.toString());
+            
+            int success=response.toString().indexOf("New record created successfully");
+            
+            //Debugging Line - output the location of the comma or -1 if not found
+            //System.out.println("Comma Point: "+commaPt);
+            if(success>-1){
+                System.out.println("Ticket Created"); 
+            }
+            else{
+                System.out.println("Request Failed");
+            }
+                    
     }
     
     // listOfNotes method(Returns all the active Notes) Created By : Mohamed Mohamed

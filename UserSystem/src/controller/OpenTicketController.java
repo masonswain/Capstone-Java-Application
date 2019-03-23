@@ -6,6 +6,7 @@
 package controller;
 
 import application.Main;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -41,7 +45,15 @@ public class OpenTicketController implements Initializable {
     private Label lblMessagesWaiting;
     @FXML
     private Label lblTicketsOpen;
-
+    @FXML
+    private ComboBox cbBuilding;
+    @FXML
+    private TextField txtRoomNum;
+    @FXML
+    private TextField txtPhone;
+    @FXML
+    private TextArea txtProblemDescription;
+    
     /**
      * Initializes the controller class.
      */
@@ -49,6 +61,9 @@ public class OpenTicketController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        
+        cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
+        
     }    
 
     
@@ -82,7 +97,18 @@ public class OpenTicketController implements Initializable {
 
     @FXML
     private void openNewTicket(ActionEvent event) throws IOException {
-        System.out.println("New ticket created");
+        //System.out.println("New ticket created");
+        System.out.println(cbBuilding.getValue().toString());
+        
+        String building = cbBuilding.getValue().toString();
+        
+        String room=txtRoomNum.getText();
+        System.out.println(room);
+        String phone=txtPhone.getText();
+        System.out.println(phone);
+        String description=txtProblemDescription.getText();
+        communicate.createTicket(building, room, phone, description);
+        
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ViewTickets.fxml")); // loads main fxml class
         Scene scene = new Scene(root);
 	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());

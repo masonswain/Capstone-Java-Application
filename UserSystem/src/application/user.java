@@ -13,8 +13,9 @@ public class user {
     
     public String fName=null;
     public String lName=null;
-    public boolean authenticated=false;
     public String uName;
+    public boolean isAdmin;
+    public boolean authenticated=false;
     
     public user(){
     
@@ -37,5 +38,7 @@ public class user {
     public String getlName(){
     return lName;
     }
-    
+    public String getuName(){
+    return uName;
+    }
 }
