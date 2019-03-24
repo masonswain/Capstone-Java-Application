@@ -46,7 +46,7 @@ via POST to a PHP script that determines whether the credentials are correct
             //Reference to Sending GET Request and returning data
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
             //Example GET/POST Request URL
-            String url = "http://csc450.joelknutson.net/authenticate.php";
+            String url = "http://csc450.joelknutson.net/java/authenticate.php";
             
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
@@ -136,7 +136,7 @@ via POST to a PHP script that determines whether the credentials are correct
         
         
         //////////////    HTTP COMMUNICATION    ////////////////////
-            String url = "http://csc450.joelknutson.net/return-tech-tickets.php";
+            String url = "http://csc450.joelknutson.net/java/return-tech-tickets.php";
             
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
@@ -259,7 +259,7 @@ via POST to a PHP script that determines whether the credentials are correct
             //Reference to Sending GET Request and returning data
             //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
             //Example GET/POST Request URL
-            String url = "http://csc450.joelknutson.net/create-ticket.php";
+            String url = "http://csc450.joelknutson.net/java/create-ticket.php";
             
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
