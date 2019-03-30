@@ -10,6 +10,8 @@ import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,13 +55,22 @@ public class OpenTicketController implements Initializable {
     private TextField txtPhone;
     @FXML
     private TextArea txtProblemDescription;
+    @FXML
+    private TextArea txtProblemSubject;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        //Update Ticket List
+        try {
+            Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
+        } catch (IOException ex) {
+            Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Update GUI Ticket Count
         lblTicketsOpen.setText(Main.activeTicketCount);
         
         cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
@@ -98,16 +109,18 @@ public class OpenTicketController implements Initializable {
     @FXML
     private void openNewTicket(ActionEvent event) throws IOException {
         //System.out.println("New ticket created");
-        System.out.println(cbBuilding.getValue().toString());
-        
+        //System.out.println(cbBuilding.getValue().toString());
+        System.out.println("Assigning variables");
         String building = cbBuilding.getValue().toString();
         
         String room=txtRoomNum.getText();
-        System.out.println(room);
+        //System.out.println(room);
         String phone=txtPhone.getText();
-        System.out.println(phone);
+        //System.out.println(phone);
         String description=txtProblemDescription.getText();
-        communicate.createTicket(building, room, phone, description);
+        String subject=txtProblemSubject.getText();
+        System.out.println("Communicate()");
+        communicate.createTicket(building, room, phone, description, subject);
         
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ViewTickets.fxml")); // loads main fxml class
         Scene scene = new Scene(root);

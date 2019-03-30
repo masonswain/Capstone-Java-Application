@@ -124,7 +124,7 @@ via POST to a PHP script that determines whether the credentials are correct
     }
     
     // Returns all the active list of Tickets associated with a tech username
-    public static ArrayList<Ticket> updateAllActiveTechTickets(String techUN) throws IOException {	
+    public static ArrayList<Ticket> updateAllActiveUserTickets(String uName) throws IOException {	
         
         /////////////    VARIABLES    /////////////////
         ArrayList<Ticket> ticketList = new ArrayList();
@@ -136,12 +136,12 @@ via POST to a PHP script that determines whether the credentials are correct
         
         
         //////////////    HTTP COMMUNICATION    ////////////////////
-            String url = "http://csc450.joelknutson.net/java/return-tech-tickets.php";
+            String url = "http://csc450.joelknutson.net/java/return-user-tickets.php";
             
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             conn.setRequestMethod("POST");
-            String urlParameters= "techUN="+techUN+"&status=active";
+            String urlParameters= "uName="+uName+"&status=active";
             
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -250,7 +250,7 @@ via POST to a PHP script that determines whether the credentials are correct
         return ticketList;
     }
     
-    public static void createTicket(String building, String room, String phone, String description) throws IOException{
+    public static void createTicket(String building, String room, String phone, String description, String subject) throws IOException{
     
             String inputFromURL = null;
             String userUN = Main.currentUser.getuName();
@@ -265,7 +265,7 @@ via POST to a PHP script that determines whether the credentials are correct
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             conn.setRequestMethod("POST");
            
-            String urlParameters= "ticketTitle="+description+"&techUN=unassigned"+"&userUN="+Main.currentUser.getuName()+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone;
+            String urlParameters= "ticketTitle="+subject+"&techUN=unassigned"+"&userUN="+userUN+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone+"&description="+description;
             
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());

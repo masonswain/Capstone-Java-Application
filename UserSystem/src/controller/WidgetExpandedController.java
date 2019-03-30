@@ -6,9 +6,12 @@
 package controller;
 
 import application.Main;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,8 +50,16 @@ public class WidgetExpandedController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        //Update Ticket List
+        try {
+            Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
+        } catch (IOException ex) {
+            Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Update GUI count
         lblTicketsOpen.setText(Main.activeTicketCount);
+        
     }    
 
     @FXML

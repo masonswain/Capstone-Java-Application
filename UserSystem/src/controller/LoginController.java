@@ -63,7 +63,7 @@ public void Login(ActionEvent event) throws Exception {
         if(Main.currentUser.authenticated) { 
             
             //Update Ticket List
-            Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+            Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
             //Load New Scene
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); // loads main fxml class
             Scene scene = new Scene(root);
