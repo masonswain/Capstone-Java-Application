@@ -6,6 +6,8 @@
 package controller;
 
 import application.Main;
+import static application.Main.xOffset;
+import static application.Main.yOffset;
 import application.Ticket;
 import application.communicate;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -73,7 +76,7 @@ public class ViewTicketsController implements Initializable {
 
         //Add strings to observable list
         for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
-        listItems.add(Main.ticketList.get(i).getTicketTitle()+"  |  "+Main.ticketList.get(i).getUserUN());
+        listItems.add(Main.ticketList.get(i).getTicketTitle()+"  \nCreated: "+Main.ticketList.get(i).getDateTimeCreated());
         }
         
         //Add observable list to listview
@@ -81,58 +84,106 @@ public class ViewTicketsController implements Initializable {
         
     }
 
-    private void viewTicket() throws IOException{
-            
-    }
-
     @FXML
-    private void ExpandWidget(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); 
-            Scene scene = new Scene(root);
-	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (125));
-            window.setScene(scene);
-            window.show();
-    }
-
-    @FXML
-    private void gotoOpenTicket(ActionEvent event) throws IOException {
+    private void gotoOpenTicket(MouseEvent event) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/OpenTicket.fxml")); 
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (425));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();   
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+            
+            /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+            ////////////////////        END      //////////////////////////// 
+            
             window.setScene(scene);
             window.show();
     }
-
     @FXML
-    private void gotoWidgetExpanded(ActionEvent event) throws IOException {
+    private void gotoWidgetExpanded(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); 
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (125));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();            
+            double nextStageHeight = 100.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+            
+            /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+            ////////////////////        END      //////////////////////////// 
+            
             window.setScene(scene);
             window.show();
     }
 
     @FXML
     private void gotoWidgetCollapsed(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetCollapsed.fxml")); 
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); 
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (65));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 100.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+            
+            /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+            ////////////////////        END      //////////////////////////// 
+            
             window.setScene(scene);
             window.show();
     }
@@ -144,9 +195,31 @@ public class ViewTicketsController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (425));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+            
+            /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+            ////////////////////        END      //////////////////////////// 
+            
             window.setScene(scene);
             window.show();
     }

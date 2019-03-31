@@ -35,12 +35,12 @@
                   <Font name="Arial Bold" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="btnOpenTicket" layoutX="46.0" layoutY="61.0" mnemonicParsing="false" onAction="#gotoOpenTicket" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Open Ticket" textFill="WHITE">
+            <Button fx:id="btnOpenTicket" layoutX="46.0" layoutY="61.0" mnemonicParsing="false" onMouseClicked="#gotoOpenTicket" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Open Ticket" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnCancel" layoutX="162.0" layoutY="61.0" mnemonicParsing="false" onAction="#gotoWidgetExpanded" onMouseClicked="#ExpandWidget" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Cancel" textFill="WHITE">
+            <Button fx:id="btnCancel" layoutX="162.0" layoutY="61.0" mnemonicParsing="false" onMouseClicked="#gotoWidgetExpanded" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Cancel" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -55,8 +55,7 @@
                   <Font name="Arial Bold" size="10.0" />
                </font>
             </Label>
-            <Polygon fill="DODGERBLUE" layoutX="273.0" layoutY="-103.0" points="29.0, 40.0, 50.0, 40.0, 38.0, 65.0" stroke="BLACK" strokeType="INSIDE" />
-            <Polygon fx:id="btnCollapse" fill="WHITE" layoutX="243.0" layoutY="-30.0" onMouseClicked="#gotoWidgetCollapsed" points="43.5, 33.0, 51.75, 50.25, 36.5, 50.25" rotate="180.0" stroke="#511616" strokeType="INSIDE">
+            <Polygon fx:id="btnCollapse" fill="WHITE" layoutX="243.0" layoutY="-30.0" onMouseClicked="#gotoWidgetExpanded" points="43.5, 33.0, 51.75, 50.25, 36.5, 50.25" rotate="180.0" stroke="#511616" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -81,15 +80,7 @@
       </AnchorPane>
       <VBox layoutX="14.0" layoutY="127.0" prefHeight="263.0" prefWidth="276.0">
          <children>
-            <Button fx:id="btnTicketExample" mnemonicParsing="false" onAction="#gotoViewTicketComment" prefHeight="20.0" prefWidth="287.0" style="-fx-background-color: MAROON;" text="9/24/18     |    Student cant login                 " textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ListView fx:id="tvTicketList" onMouseClicked="#gotoViewTicketComment" prefHeight="238.0" prefWidth="276.0" style="-fx-background-color: MAROON;" />
+            <ListView fx:id="tvTicketList" onMouseClicked="#gotoViewTicketComment" prefHeight="243.0" prefWidth="276.0" style="-fx-background-color: MAROON;" />
          </children>
       </VBox>
    </children>

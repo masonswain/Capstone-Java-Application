@@ -1,50 +1,68 @@
 package application; // Application package
 	
-
-import java.util.ArrayList;
+import java.util.ArrayList; // ArrayList class.
 import javafx.application.Application; // Application class
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader; // FXMLLoader class
-import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage; // Stage class
 import javafx.scene.Parent; // Parent class
 import javafx.scene.Scene; // Scene class.
-import javafx.stage.Screen;
-import javafx.stage.StageStyle;
+import javafx.stage.StageStyle;//StageStyle class.
+import javafx.scene.input.MouseEvent;// MouseEvent class.
+import javafx.event.EventHandler;// EventHandler class.
 
+// Edited By: Mohamed Mohamed
 
 public class Main extends Application { // Main class extends Application
-    
+    // Variables
     public static user currentUser;
     public static ArrayList<Ticket> ticketList;
     public static String activeTicketCount="0";
     public static String unreadMessageCount="0";
+        
+    public static double xOffset;
+    public static double yOffset;
+
+     //start method
     
     @Override
-    public void start(Stage primaryStage) { // Start method
+       public void start(Stage primaryStage) throws Exception {
+    	 
+ 	Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml")); // loads login fxml file
+ 
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
         
-        // Using try-catch block to check login system for Javafx
-	try {
-			
-	    Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml")); // loads login fxml file
-            
-            Scene scene = new Scene(root);
-		    
-	    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
-            primaryStage.initStyle(StageStyle.UNDECORATED);
-	    primaryStage.setScene(scene);
-			
-	    primaryStage.show();
-		    
-            // End of try-catch block
-		    
-            } catch(Exception e) {
-		
-            e.printStackTrace();
+          // User Screen is able to be grabbed by Mouse.
+           
+        	// Handle Method
+        	
+           @Override
+           public void handle(MouseEvent event) {
+               xOffset = event.getSceneX();
+               yOffset = event.getSceneY();
+           } 
+        });
+        
+        // User Screen is able to moved by Mouse.
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+               primaryStage.setX(event.getScreenX() - xOffset);
+               primaryStage.setY(event.getScreenY() - yOffset);
             }
-	}
-	
-	public static void main(String[] args) { // Launches the User login system Application
+        });
+        
+        Scene scene = new Scene(root); // Creates a scene object.
+       
+        primaryStage.setScene(scene); // calls scene.
+        
+        primaryStage.show(); // calls show.
+        
+     }
+      // Our Main Method in Java
+       public static void main(String[] args) { // Launches the User login system Application
 		launch(args);
 	}
         

@@ -11,13 +11,13 @@ package application;
  */
 public class Ticket {
     
-    private String ticketID, ticketTitle, techUN,userUN, status, building, room, phone;
+    private String ticketID, ticketTitle, techUN,userUN, status, building, room, phone, dateTimeCreated;
     
     public Ticket(){
     
     }
     
-    public Ticket(String ticketID,String ticketTitle,String techUN,String userUN,String status,String building,String room,String phone){
+    public Ticket(String ticketID,String ticketTitle,String techUN,String userUN,String status,String building,String room,String phone, String dateTimeCreated){
     
         this.ticketID = ticketID;
         this.ticketTitle = ticketTitle;
@@ -27,8 +27,7 @@ public class Ticket {
         this.building = building;
         this.room = room;
         this.phone = phone;
-        
-        
+        this.dateTimeCreated=dateTimeCreated;       
         
     }
 
@@ -142,5 +141,19 @@ public class Ticket {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the dateTimeCreated
+     */
+    public String getDateTimeCreated() {
+        return dateTimeCreated;
+    }
+
+    /**
+     * @param dateTimeCreated the dateTimeCreated to set
+     */
+    public void setDateTimeCreated(String dateTimeCreated) {
+        this.dateTimeCreated = dateTimeCreated;
     }
 }

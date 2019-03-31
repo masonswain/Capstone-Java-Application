@@ -150,9 +150,11 @@ via POST to a PHP script that determines whether the credentials are correct
             wr.close();
             
             int responseCode = conn.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+            
+            //Debugging Log Info
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -179,70 +181,70 @@ via POST to a PHP script that determines whether the credentials are correct
                 endSub = serverResponse.indexOf("<br/>",startSub);
                 String ticketID = serverResponse.substring(startSub,endSub);
                 //Debug Line
-                System.out.println("Ticket ID: "+ticketID);
+                //System.out.println("Ticket ID: "+ticketID);
                 
                 //Find ticketTitle information
                 startSub = serverResponse.indexOf("Title: ",startSub)+7;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String ticketTitle = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Ticket Title: "+ticketTitle);
+                //System.out.println("Ticket Title: "+ticketTitle);
                 
                  //Find endUser information
                 startSub = serverResponse.indexOf("End User: ",startSub)+10;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String userUN = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("End User: "+userUN);
+                //System.out.println("End User: "+userUN);
                 
                 //Find technicianUser information
                 startSub = serverResponse.indexOf("Tech: ",startSub)+6;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String technicianUN = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Tech User: "+technicianUN);
+                //System.out.println("Tech User: "+technicianUN);
                 
                 //Find building information
                 startSub = serverResponse.indexOf("Building: ",startSub)+10;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String building = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Building: "+building);
+                //System.out.println("Building: "+building);
                 
                 //Find room information
                 startSub = serverResponse.indexOf("Room: ",startSub)+6;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String room = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Room: "+room);
+                //System.out.println("Room: "+room);
                 
                 //Find phone information
                 startSub = serverResponse.indexOf("Phone: ",startSub)+7;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String phone = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Phone: "+phone);
+                //System.out.println("Phone: "+phone);
                 
                 //Find DATETIME_CREATED information
                 startSub = serverResponse.indexOf("DATETIME_CREATED: ",startSub)+18;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String dateTimeCreated = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Created: "+dateTimeCreated);
+                //System.out.println("Created: "+dateTimeCreated);
                 
                 //Find DATETIME_SOLVED information
                 startSub = serverResponse.indexOf("DATETIME_SOLVED: ",startSub)+17;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 String dateTimeSolved = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Solved: "+dateTimeSolved);
+                //System.out.println("Solved: "+dateTimeSolved);
                 
                 
-                ticketList.add(new Ticket(ticketID,ticketTitle, technicianUN, userUN, "Active", building, room, phone));
+                ticketList.add(new Ticket(ticketID,ticketTitle, technicianUN, userUN, "Active", building, room, phone, dateTimeCreated));
                 
             }
-            
-            System.out.println("Ticket Count: "+ticketCount);
+            //Debug Line
+            //System.out.println("Ticket Count: "+ticketCount);
             Main.activeTicketCount=Integer.toString(ticketCount);
             Main.ticketList=ticketList;
             

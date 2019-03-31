@@ -6,10 +6,13 @@
 package controller;
 
 import application.Main;
+import static application.Main.xOffset;
+import static application.Main.yOffset;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,9 +61,31 @@ public class ViewTicketCommentController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (425));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+
+            /////////  Allow undecorated window be dragged     ////////////// 
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                } 
+            });
+
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    window.setX(event.getScreenX() - xOffset);
+                    window.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+            ////////////////////        END      //////////////////////////// 
+
             window.setScene(scene);
             window.show();
     
@@ -72,9 +97,31 @@ public class ViewTicketCommentController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (125));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+
+            /////////  Allow undecorated window be dragged     ////////////// 
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                } 
+            });
+
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    window.setX(event.getScreenX() - xOffset);
+                    window.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+            ////////////////////        END      //////////////////////////// 
+
             window.setScene(scene);
             window.show();
     }
@@ -85,9 +132,31 @@ public class ViewTicketCommentController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (65));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 40.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+
+            /////////  Allow undecorated window be dragged     ////////////// 
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                } 
+            });
+
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    window.setX(event.getScreenX() - xOffset);
+                    window.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+            ////////////////////        END      //////////////////////////// 
+
             window.setScene(scene);
             window.show();
     }
@@ -98,9 +167,31 @@ public class ViewTicketCommentController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (425));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+
+            /////////  Allow undecorated window be dragged     ////////////// 
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                } 
+            });
+
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    window.setX(event.getScreenX() - xOffset);
+                    window.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+            ////////////////////        END      //////////////////////////// 
+
             window.setScene(scene);
             window.show();
     }
@@ -111,9 +202,31 @@ public class ViewTicketCommentController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (425));
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 400.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
+
+            /////////  Allow undecorated window be dragged     ////////////// 
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                } 
+            });
+
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    window.setX(event.getScreenX() - xOffset);
+                    window.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+            ////////////////////        END      //////////////////////////// 
+
             window.setScene(scene);
             window.show();
     }
