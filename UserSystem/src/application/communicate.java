@@ -18,17 +18,10 @@ import java.util.List;
 
 public class communicate {
     
-    private listOfTickets tickets = new listOfTickets();
-   
-    private listOfNotes notes = new listOfNotes();
-    
-    private openTickets ot = new openTickets();
-    
-/*
-authenticate takes a username and password as a string and sends it 
-via POST to a PHP script that determines whether the credentials are correct
-*/
-    
+
+    //authenticate takes a username and password as a string and sends it 
+    //via POST to a PHP script that determines whether the credentials are correct
+    //Uses server file "authenticate.php"
     public static user authenticate(String uName, String pw) throws IOException{
     
             String inputFromURL = null;
@@ -124,6 +117,7 @@ via POST to a PHP script that determines whether the credentials are correct
     }
     
     // Returns all the active list of Tickets associated with a tech username
+    //Uses server file "return-user-tickets.php"
     public static ArrayList<Ticket> updateAllActiveUserTickets(String uName) throws IOException {	
         
         /////////////    VARIABLES    /////////////////
@@ -252,6 +246,7 @@ via POST to a PHP script that determines whether the credentials are correct
         return ticketList;
     }
     
+    //Uses server file "create-ticket.php"
     public static void createTicket(String building, String room, String phone, String description, String subject) throws IOException{
     
             String inputFromURL = null;
@@ -303,15 +298,83 @@ via POST to a PHP script that determines whether the credentials are correct
                     
     }
     
-    // listOfNotes method(Returns all the active Notes) Created By : Mohamed Mohamed
-    public List<listOfNotes> getAllActiveNotes() { 	
-        return notes.getAllActiveNotes();
-    }
-
-
-    // openTicket method(Returns all the active Open Tickets) Created By : Mohamed Mohamed
-    public List<openTickets> getAllActiveOpenTickets() {	
-        return ot.getAllActiveOpenTickets();
+    // Returns all the active list of Tickets associated with a tech username
+    public static Note getCurrentTicketNote(String ticket_ID) throws IOException {	
+        
+        /////////////    VARIABLES    /////////////////
+        ArrayList<Ticket> ticketList = new ArrayList();
+        String inputFromURL = null;
+        String serverResponse;
+        int ticketCount=0;
+        int fromIndex=0;
+        String owner_UN=null;
+        String note_ID=null;
+        String note=null;
+        
+        
+        
+        
+        //////////////    HTTP COMMUNICATION    ////////////////////
+            String url = "http://csc450.joelknutson.net/java/return-ticket-notes.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters= "ticketID="+ticket_ID;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            
+            //Debugging Log Info
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+            
+            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
+                        
+            //Create and add Tickets list            
+            for(int i=0, startSub=0, endSub=0; i < ticketCount; i++){
+                //Find ticketID information
+                startSub = serverResponse.indexOf("OWNER: ",startSub)+11;
+                endSub = serverResponse.indexOf("<br/>",startSub);
+                owner_UN = serverResponse.substring(startSub,endSub);
+                //Debug Line
+                System.out.println("OWNER: "+owner_UN);
+                
+                //Find ticketTitle information
+                startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+7;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                note_ID = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                System.out.println("Ticket Title: "+note_ID);
+                
+                 //Find endUser information
+                startSub = serverResponse.indexOf("NOTE: ",startSub)+10;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                note = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                System.out.println("End User: "+note);
+                
+                
+            }
+                 
+        
+        return new Note(note_ID, ticket_ID, owner_UN, note);
     }
 }
 

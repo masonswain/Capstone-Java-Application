@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package application;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
@@ -23,15 +23,20 @@ public class setWidgetPosition {
         System.out.println("Height: "+nextStageHeight);
         System.out.println("Screen Y + Height + 5 = "+(+nextStageHeight+5));
         
-        if((yCoordinate+nextStageHeight+5)>primaryScreenBounds.getHeight()){
-            System.out.println("to close to bottom");
-            returnedY=(primaryScreenBounds.getHeight() - (nextStageHeight+5));
-        }else if((yCoordinate-10)<0){
-            System.out.println("to close to top");
-            returnedY=(primaryScreenBounds.getMinY()+10);
+        if((yCoordinate+nextStageHeight+425)>=primaryScreenBounds.getHeight()) {
+        	returnedY=(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (nextStageHeight+10));
         }else {
-            System.out.println("y not changed");
-            returnedY=(yCoordinate);
+        	
+	        if((yCoordinate+nextStageHeight+5)>primaryScreenBounds.getHeight()){
+	            System.out.println("to close to bottom");
+	            returnedY=(primaryScreenBounds.getHeight() - (nextStageHeight+5));
+	        }else if((yCoordinate-10)<0){
+	            System.out.println("to close to top");
+	            returnedY=(primaryScreenBounds.getMinY()+10);
+	        }else {
+	            System.out.println("y not changed");
+	            returnedY=(yCoordinate);
+	        }
         }
         
         System.out.println("yCoordinate: "+yCoordinate);

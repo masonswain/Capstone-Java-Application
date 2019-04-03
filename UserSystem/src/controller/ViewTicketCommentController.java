@@ -5,12 +5,17 @@
  */
 package controller;
 
+import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
+import application.Note;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -44,6 +49,10 @@ public class ViewTicketCommentController implements Initializable {
     private Label lblMessagesWaiting;
     @FXML
     private Label lblTicketsOpen;
+    
+    public static String ticketID;
+    
+    Note currentNote;
 
     /**
      * Initializes the controller class.
@@ -52,6 +61,11 @@ public class ViewTicketCommentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        try {
+            currentNote=communicate.getCurrentTicketNote(ticketID);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewTicketCommentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
     @FXML

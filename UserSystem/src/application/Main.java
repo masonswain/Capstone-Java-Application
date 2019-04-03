@@ -19,6 +19,8 @@ public class Main extends Application { // Main class extends Application
     public static ArrayList<Ticket> ticketList;
     public static String activeTicketCount="0";
     public static String unreadMessageCount="0";
+    public static String ticketID=null;
+    public static Ticket ticket=null;
         
     public static double xOffset;
     public static double yOffset;

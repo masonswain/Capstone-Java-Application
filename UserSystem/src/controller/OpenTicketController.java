@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;

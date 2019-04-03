@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
@@ -191,6 +192,12 @@ public class ViewTicketsController implements Initializable {
      @FXML
     private void gotoViewTicketComment(MouseEvent event) throws IOException {
             System.out.println(tvTicketList.getSelectionModel().getSelectedItem());
+            int i=tvTicketList.getSelectionModel().getSelectedIndex();
+            //Debug
+            System.out.println("O"+Main.ticketList.get(i).getTicketID()+"O");
+            //Assign ticket id of selected item to ticketID in ViewTicketComment.java
+            ViewTicketCommentController.ticketID=Main.ticketList.get(i).getTicketID();
+            
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/ViewTicketComment.fxml")); 
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
