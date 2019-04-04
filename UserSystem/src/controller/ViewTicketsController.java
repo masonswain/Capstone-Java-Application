@@ -194,9 +194,10 @@ public class ViewTicketsController implements Initializable {
             System.out.println(tvTicketList.getSelectionModel().getSelectedItem());
             int i=tvTicketList.getSelectionModel().getSelectedIndex();
             //Debug
-            System.out.println("O"+Main.ticketList.get(i).getTicketID()+"O");
+            System.out.println(Main.ticketList.get(i).getTicketID());
             //Assign ticket id of selected item to ticketID in ViewTicketComment.java
             ViewTicketCommentController.ticketID=Main.ticketList.get(i).getTicketID();
+            Main.ticket=Main.ticketList.get(i);
             
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/ViewTicketComment.fxml")); 
             Scene scene = new Scene(root);

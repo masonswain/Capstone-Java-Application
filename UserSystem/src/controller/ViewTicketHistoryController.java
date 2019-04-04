@@ -9,9 +9,14 @@ import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
+import application.Note;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -47,6 +52,8 @@ public class ViewTicketHistoryController implements Initializable {
     private Label lblMessagesWaiting;
     @FXML
     private Label lblTicketsOpen;
+    
+    ArrayList<Note> listOfNotes;
 
     /**
      * Initializes the controller class.
@@ -55,6 +62,11 @@ public class ViewTicketHistoryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        try {
+            listOfNotes=(communicate.getAllTicketNotes(Main.ticket.getTicketID()));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewTicketHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
 
 

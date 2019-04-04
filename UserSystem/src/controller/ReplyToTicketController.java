@@ -9,6 +9,7 @@ import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -44,7 +46,9 @@ public class ReplyToTicketController implements Initializable {
     @FXML
     private Label lblMessagesWaiting;
     @FXML
-    private Label lblTicketsOpen;
+    private Label lblTicketsOpen, lblNoteOwner;
+    @FXML
+    private TextArea txtNoteText;
 
     /**
      * Initializes the controller class.
@@ -53,6 +57,8 @@ public class ReplyToTicketController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        lblNoteOwner.setText("Ticket Comment: "+Main.currentUser.getfName()+" "+Main.currentUser.getlName());
+        
     }    
 
     @FXML
@@ -94,12 +100,16 @@ public class ReplyToTicketController implements Initializable {
     private void sendMessage(ActionEvent event) throws IOException {
         System.out.println("Message Sent");
         
+        String ticketNote=txtNoteText.getText();
+        System.out.println(Main.ticket.getTicketID());
+        communicate.createTicketNote(Main.ticket.getTicketID(), Main.currentUser.getuName(), ticketNote);
+        
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ViewTickets.fxml")); // loads main fxml class
         Scene scene = new Scene(root);
 	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
-        double nextStageHeight = 300.0;
+        double nextStageHeight = 400.0;
         window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
 
         /////////  Allow undecorated window be dragged     ////////////// 

@@ -57,10 +57,10 @@ public void Login(ActionEvent event) throws Exception {
     //////////////////////     Credential Entry Bypass     //////////////////////////    
 
         //comment this line out to bypass credential entry
-        //Main.currentUser = communicate.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
+        Main.currentUser = communicate.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
         
         //uncomment this line to bypass credential entry
-        Main.currentUser = communicate.authenticate("jknutson","12345");
+        //Main.currentUser = communicate.authenticate("jknutson","12345");
         
     //////////////////////   End Credential Entry Bypass   ////////////////////////// 
         

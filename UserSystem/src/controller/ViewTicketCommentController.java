@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -49,6 +50,12 @@ public class ViewTicketCommentController implements Initializable {
     private Label lblMessagesWaiting;
     @FXML
     private Label lblTicketsOpen;
+    @FXML
+    private TextArea txtNote;
+    @FXML
+    private Label lblCommentDateTime;
+    @FXML
+    private Label lblOwner;
     
     public static String ticketID;
     
@@ -63,7 +70,13 @@ public class ViewTicketCommentController implements Initializable {
         lblTicketsOpen.setText(Main.activeTicketCount);
         try {
             currentNote=communicate.getCurrentTicketNote(ticketID);
+            
+            txtNote.setText(currentNote.getNote());
+            lblCommentDateTime.setText("Comment Date: "+currentNote.getNote_ID());
+            lblOwner.setText("Comment by: "+currentNote.getOwner_UN());
+            System.out.println(currentNote.getNote());
         } catch (IOException ex) {
+            txtNote.setText("** error getting note **");
             Logger.getLogger(ViewTicketCommentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    

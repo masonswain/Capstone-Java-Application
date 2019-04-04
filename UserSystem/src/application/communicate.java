@@ -305,8 +305,6 @@ public class communicate {
         ArrayList<Ticket> ticketList = new ArrayList();
         String inputFromURL = null;
         String serverResponse;
-        int ticketCount=0;
-        int fromIndex=0;
         String owner_UN=null;
         String note_ID=null;
         String note=null;
@@ -347,34 +345,148 @@ public class communicate {
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
                         
-            //Create and add Tickets list            
-            for(int i=0, startSub=0, endSub=0; i < ticketCount; i++){
-                //Find ticketID information
-                startSub = serverResponse.indexOf("OWNER: ",startSub)+11;
-                endSub = serverResponse.indexOf("<br/>",startSub);
-                owner_UN = serverResponse.substring(startSub,endSub);
-                //Debug Line
-                System.out.println("OWNER: "+owner_UN);
+            {
+            int startSub=0, endSub=0;
+            //Find ticketID information
+            startSub = serverResponse.indexOf("OWNER: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            owner_UN = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("OWNER: "+owner_UN);
+            
+            //Find ticketTitle information
+            startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+9;
+            endSub = serverResponse.indexOf("<br/>", startSub);
+            note_ID = serverResponse.substring(startSub, endSub);
+            //Debug Line
+            System.out.println("Ticket Title: "+note_ID);
+              
+            //Find endUser information
+            startSub = serverResponse.indexOf("NOTE: ",startSub)+6;
+            endSub = serverResponse.indexOf("<br/>", startSub);
+            note = serverResponse.substring(startSub, endSub);
+            //Debug Line
+            System.out.println("End User: "+note);
+            }   
                 
-                //Find ticketTitle information
-                startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+7;
-                endSub = serverResponse.indexOf("<br/>", startSub);
-                note_ID = serverResponse.substring(startSub, endSub);
-                //Debug Line
-                System.out.println("Ticket Title: "+note_ID);
-                
-                 //Find endUser information
-                startSub = serverResponse.indexOf("NOTE: ",startSub)+10;
-                endSub = serverResponse.indexOf("<br/>", startSub);
-                note = serverResponse.substring(startSub, endSub);
-                //Debug Line
-                System.out.println("End User: "+note);
-                
-                
-            }
+            
                  
         
         return new Note(note_ID, ticket_ID, owner_UN, note);
+    }
+    
+    public static ArrayList<Note> getAllTicketNotes(String ticket_ID) throws IOException{
+    
+        ArrayList<Note> listOfTicketNotes = new ArrayList<Note>();
+        
+        /////////////    VARIABLES    /////////////////
+        ArrayList<Ticket> ticketList = new ArrayList();
+        String inputFromURL = null;
+        String serverResponse;
+        String owner_UN=null;
+        String note_ID=null;
+        String note=null;
+        int noteCount=0;
+        int fromIndex=0;
+        
+        
+        
+        
+        //////////////    HTTP COMMUNICATION    ////////////////////
+            String url = "http://csc450.joelknutson.net/java/return-all-ticket-notes.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters= "ticketID="+ticket_ID;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            
+            //Debugging Log Info
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+            
+            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
+            
+            while((fromIndex = serverResponse.indexOf("End User: ", fromIndex))!= -1){
+            noteCount++;
+            fromIndex++;
+            }
+            
+            for(int i=0,startSub=0,endSub=0; i<noteCount ;i++){
+                
+            //Find ticketID information
+            startSub = serverResponse.indexOf("OWNER: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            owner_UN = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("OWNER: "+owner_UN);
+            
+            //Find ticketTitle information
+            startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+9;
+            endSub = serverResponse.indexOf("<br/>", startSub);
+            note_ID = serverResponse.substring(startSub, endSub);
+            //Debug Line
+            System.out.println("Ticket Title: "+note_ID);
+              
+            //Find endUser information
+            startSub = serverResponse.indexOf("NOTE: ",startSub)+6;
+            endSub = serverResponse.indexOf("<br/>", startSub);
+            note = serverResponse.substring(startSub, endSub);
+            //Debug Line
+            System.out.println("End User: "+note);
+            
+            if(note_ID!=null){
+                listOfTicketNotes.add(new Note(note_ID, Main.ticket.getTicketID(), owner_UN, note));
+            }else{
+            i=-1;
+            }
+            }   
+        
+        return listOfTicketNotes;
+    }
+    
+    public static void createTicketNote(String ticketID, String ownerUN, String ticketNote) throws MalformedURLException, ProtocolException, IOException{
+    
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/create-note.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "ticketID="+ticketID+"&ownerUN="+ownerUN+"&ticketNote="+ticketNote;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+                    
     }
 }
 

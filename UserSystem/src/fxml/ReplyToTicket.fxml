@@ -76,12 +76,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="277.0" text="Ticket Comment: Joel Knutson" textFill="#f8f8f8">
+            <Label fx:id="lblNoteOwner" alignment="CENTER" prefHeight="17.0" prefWidth="277.0" text="Ticket Comment: No Data" textFill="#f8f8f8">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea prefHeight="242.0" prefWidth="276.0" wrapText="true" />
+            <TextArea fx:id="txtNoteText" prefHeight="242.0" prefWidth="276.0" wrapText="true" />
          </children>
       </VBox>
       <Label fx:id="lblMessagesWaiting" alignment="CENTER" layoutX="155.0" layoutY="35.0" prefHeight="17.0" prefWidth="15.0" style="-fx-background-color: WHITE;" text="0">
