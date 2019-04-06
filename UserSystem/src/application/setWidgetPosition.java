@@ -42,7 +42,13 @@ public class setWidgetPosition {
         
     }
     
-    public static double setWidgetY(MouseEvent event, Rectangle2D primaryScreenBounds, double nextStageHeight){
+    
+    
+}
+
+
+/*
+public static double setWidgetY(MouseEvent event, Rectangle2D primaryScreenBounds, double nextStageHeight){
         
         double yCoordinate;
         System.out.println("Screen Height: "+primaryScreenBounds.getHeight());
@@ -65,5 +71,5 @@ public class setWidgetPosition {
         return yCoordinate;
         
     }
-    
-}
+
+*/

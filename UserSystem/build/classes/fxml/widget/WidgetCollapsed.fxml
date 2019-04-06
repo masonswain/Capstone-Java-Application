@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.widget.WidgetCollapsedController">
+   <children>
+      <Label alignment="CENTER" layoutX="28.0" layoutY="5.0" prefHeight="27.0" prefWidth="231.0" text="South St. Paul Schools" textFill="#f8f8f8">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Circle fx:id="statusLight" fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
+      <Polygon fx:id="btnExpand" fill="WHITE" layoutX="243.0" layoutY="-30.0" onMouseClicked="#gotoWidgetExpanded" points="43.5, 33.0, 51.75, 50.25, 36.5, 50.25" stroke="#511616" strokeType="INSIDE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Polygon>
+   </children>
+   <effect>
+      <ColorAdjust />
+   </effect>
+</AnchorPane>

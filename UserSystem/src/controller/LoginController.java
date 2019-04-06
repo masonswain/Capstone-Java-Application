@@ -57,25 +57,43 @@ public void Login(ActionEvent event) throws Exception {
     //////////////////////     Credential Entry Bypass     //////////////////////////    
 
         //comment this line out to bypass credential entry
-        //Main.currentUser = communicate.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
+        Main.currentUser = communicate.authenticate(UserNameTextField.getText(),PasswordTextField.getText());
         
         //uncomment this line to bypass credential entry
-        Main.currentUser = communicate.authenticate("jknutson","12345");
+        //Main.currentUser = communicate.authenticate("jknutson","12345");
         
     //////////////////////   End Credential Entry Bypass   ////////////////////////// 
         
-        if(Main.currentUser.authenticated) { 
+        if(Main.currentUser.authenticated) {
+            
+            String fxmlFile="/fxml/widget/WidgetExpanded.fxml";
+            String cssFile="/application/application.css";
             
             //Update Ticket List
             Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
+            
+            if(Main.currentUser.isAdmin){
+            fxmlFile="/fxml/commandcenter/TechCommandCenter.fxml";
+            cssFile="/application/application.css";
+            }
+            
             //Load New Scene
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/WidgetExpanded.fxml")); // loads main fxml class
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile)); // loads main fxml class
             Scene scene = new Scene(root);
-	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+	    scene.getStylesheets().add(getClass().getResource(cssFile).toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
-            window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (125));
+            
+            if(Main.currentUser.isAdmin){
+                //Set screen in middle of primary screen
+                window.setX((primaryScreenBounds.getWidth()/2) - 500);
+                window.setY((primaryScreenBounds.getHeight()/2) - 300);
+            } 
+            else{
+                //Set widget in lower right corner of primary screen
+                window.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - (325));
+                window.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - (125));
+            }      
             
     /////////  Allow undecorated window be dragged     ////////////// 
     

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commandcenter.TechCommandCenterMinimizedController">
+   <children>
+      <Circle fx:id="statusLight" fill="#2b9a13" layoutX="20.0" layoutY="20.0" onMouseClicked="#gotoTechCommandCenter" radius="15.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
+   </children>
+</AnchorPane>

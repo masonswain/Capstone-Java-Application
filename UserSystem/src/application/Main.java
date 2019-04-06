@@ -17,7 +17,9 @@ public class Main extends Application { // Main class extends Application
     // Variables
     public static user currentUser;
     public static ArrayList<Ticket> ticketList;
+    public static ArrayList<Ticket> unassignedTicketList;
     public static String activeTicketCount="0";
+    public static String unassignedTicketCount="0";
     public static String unreadMessageCount="0";
     public static String ticketID=null;
     public static Ticket ticket=null;
