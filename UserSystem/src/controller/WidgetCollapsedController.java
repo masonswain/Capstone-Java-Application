@@ -6,13 +6,12 @@
 package controller;
 
 import application.setWidgetPosition;
-import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
+import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.shape.Circle;
 
 /**
  * FXML Controller class
@@ -32,12 +32,15 @@ import javafx.geometry.Rectangle2D;
  */
 public class WidgetCollapsedController implements Initializable {
 
+    @FXML
+    private Circle statusLight;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //Update status light
+        statusLight.setFill(communicate.updateStatusLight());
     }    
 
     @FXML
@@ -47,10 +50,9 @@ public class WidgetCollapsedController implements Initializable {
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            double nextStageHeight = 100.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
                         
-            double i = 100.0;
-            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, i));
-            
             /////////  Allow undecorated window be dragged     ////////////// 
     
             root.setOnMousePressed(new EventHandler<MouseEvent>() {       	

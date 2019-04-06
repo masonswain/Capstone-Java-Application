@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewTicketHistoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewTicketHistoryController">
    <children>
       <AnchorPane layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: MAROON;">
          <children>
@@ -57,9 +57,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Polygon>
-            <Circle fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
-            <Circle fill="#d4da1d" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
-            <Circle fill="RED" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+            <Circle fx:id="statusLight" fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
          </children>
          <effect>
             <ColorAdjust />
@@ -67,17 +65,12 @@
       </AnchorPane>
       <VBox layoutX="14.0" layoutY="97.0" prefHeight="293.0" prefWidth="276.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="287.0" style="-fx-background-color: MAROON;" text="9/24/18     |    Student cant login                 " textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Label prefHeight="17.0" prefWidth="277.0" text="Ticket History" textFill="#f8f8f8">
+            <Label fx:id="lblTicketHistory" prefHeight="17.0" prefWidth="277.0" text="Ticket History" textFill="#f8f8f8">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea prefHeight="222.0" prefWidth="276.0" text="9/24/2018 11:29AM - Joel Knutson&#10;The students password has been reset.  Please have them try again.&#10;&#10;9/23/2018  3:47PM - jsielski&#10;The student's name is John Deere.&#10;&#10;9/21/2018 1:33PM - Joel Knutson&#10;What is the student's name?&#10;&#10;9/21/2018 12:58PM - jsielski&#10;I have a student that can't login." wrapText="true" />
+            <TextArea fx:id="txtTicketHistory" prefHeight="253.0" prefWidth="276.0" text="9/24/2018 11:29AM - Joel Knutson&#10;The students password has been reset.  Please have them try again.&#10;&#10;9/23/2018  3:47PM - jsielski&#10;The student's name is John Deere.&#10;&#10;9/21/2018 1:33PM - Joel Knutson&#10;What is the student's name?&#10;&#10;9/21/2018 12:58PM - jsielski&#10;I have a student that can't login." wrapText="true" />
             <HBox prefHeight="24.0" prefWidth="276.0">
                <children>
                   <Button fx:id="btnReply" mnemonicParsing="false" onAction="#gotoReplyToTicket" style="-fx-background-color: MAROON;" text="Reply" textFill="#fcfcfc" underline="true">

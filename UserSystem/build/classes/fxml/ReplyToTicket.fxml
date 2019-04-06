@@ -56,9 +56,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Polygon>
-            <Circle fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
-            <Circle fill="#d4da1d" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
-            <Circle fill="RED" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+            <Circle fx:id="statusLight" fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
             <Label fx:id="lblTicketsOpen" alignment="CENTER" layoutX="40.0" layoutY="35.0" prefHeight="17.0" prefWidth="15.0" style="-fx-background-color: WHITE;" text="0">
                <font>
                   <Font name="System Bold" size="10.0" />
@@ -76,7 +74,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Label fx:id="lblNoteOwner" alignment="CENTER" prefHeight="17.0" prefWidth="277.0" text="Ticket Comment: No Data" textFill="#f8f8f8">
+            <Label fx:id="lblNoteOwner" alignment="CENTER" prefHeight="17.0" prefWidth="277.0" text="Ticket Comment: Joel Knutson" textFill="#f8f8f8">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

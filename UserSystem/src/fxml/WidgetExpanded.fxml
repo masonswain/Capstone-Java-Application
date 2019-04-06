@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WidgetExpandedController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WidgetExpandedController">
    <children>
       <Label alignment="CENTER" layoutX="28.0" layoutY="5.0" prefHeight="27.0" prefWidth="231.0" text="South St. Paul Schools" textFill="#f8f8f8">
          <font>
@@ -40,9 +40,8 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Polygon>
-      <Circle fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
-      <Circle fill="#d4da1d" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
-      <Circle fill="RED" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" visible="false" />
+      <Circle fx:id="statusLight" fill="#2b9a13" layoutX="25.0" layoutY="19.0" radius="11.0" stroke="#726b6b" strokeType="INSIDE" strokeWidth="3.0" />
+      
       <Label fx:id="lblTicketsOpen" alignment="CENTER" layoutX="40.0" layoutY="35.0" prefHeight="17.0" prefWidth="15.0" style="-fx-background-color: WHITE;" text="0">
          <font>
             <Font name="System Bold" size="10.0" />

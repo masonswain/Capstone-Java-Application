@@ -24,13 +24,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -41,14 +40,6 @@ import javafx.stage.Stage;
  */
 public class OpenTicketController implements Initializable {
 
-    @FXML
-    private Button btnCancel;
-    @FXML
-    private Polygon btnCollapse;
-    @FXML
-    private Button btnSubmit;
-    @FXML
-    private Label lblMessagesWaiting;
     @FXML
     private Label lblTicketsOpen;
     @FXML
@@ -61,6 +52,8 @@ public class OpenTicketController implements Initializable {
     private TextArea txtProblemDescription;
     @FXML
     private TextArea txtProblemSubject;
+    @FXML
+    private Circle statusLight;
     
     /**
      * Initializes the controller class.
@@ -76,6 +69,8 @@ public class OpenTicketController implements Initializable {
         }
         //Update GUI Ticket Count
         lblTicketsOpen.setText(Main.activeTicketCount);
+        //Update status light
+        statusLight.setFill(communicate.updateStatusLight());
         
         cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
         
@@ -89,9 +84,11 @@ public class OpenTicketController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 40.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
             
             /////////  Allow undecorated window be dragged     ////////////// 
-    
             root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
                 @Override
                 public void handle(MouseEvent event) {
@@ -121,9 +118,11 @@ public class OpenTicketController implements Initializable {
             Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
+            double nextStageHeight = 100.0;
+            window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
             
             /////////  Allow undecorated window be dragged     ////////////// 
-    
             root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
                 @Override
                 public void handle(MouseEvent event) {
@@ -168,7 +167,7 @@ public class OpenTicketController implements Initializable {
 	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
-        double nextStageHeight = 300.0;
+        double nextStageHeight = 400.0;
         window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
 
         /////////  Allow undecorated window be dragged     ////////////// 

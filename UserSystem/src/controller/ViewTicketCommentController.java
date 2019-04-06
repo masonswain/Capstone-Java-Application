@@ -25,11 +25,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -41,14 +40,6 @@ import javafx.stage.Stage;
 public class ViewTicketCommentController implements Initializable {
 
     @FXML
-    private Button btnViewTickets;
-    @FXML
-    private Button btnCancel;
-    @FXML
-    private Polygon btnCollapse;
-    @FXML
-    private Label lblMessagesWaiting;
-    @FXML
     private Label lblTicketsOpen;
     @FXML
     private TextArea txtNote;
@@ -56,9 +47,10 @@ public class ViewTicketCommentController implements Initializable {
     private Label lblCommentDateTime;
     @FXML
     private Label lblOwner;
+    @FXML
+    private Circle statusLight;
     
     public static String ticketID;
-    
     Note currentNote;
 
     /**
@@ -68,6 +60,7 @@ public class ViewTicketCommentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        statusLight.setFill(communicate.updateStatusLight());
         try {
             currentNote=communicate.getCurrentTicketNote(ticketID);
             
@@ -125,7 +118,7 @@ public class ViewTicketCommentController implements Initializable {
 	    scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();             
-            double nextStageHeight = 400.0;
+            double nextStageHeight = 100.0;
             window.setY(setWidgetPosition.setWidgetY(window.getY(), primaryScreenBounds, nextStageHeight));
 
             /////////  Allow undecorated window be dragged     ////////////// 

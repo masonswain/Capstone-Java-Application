@@ -34,6 +34,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -57,6 +58,8 @@ public class ViewTicketsController implements Initializable {
     private Label lblTicketsOpen;
     @FXML
     private ListView tvTicketList;
+    @FXML
+    private Circle statusLight;
     
     final ObservableList<String> listItems = FXCollections.observableArrayList();
 
@@ -74,6 +77,8 @@ public class ViewTicketsController implements Initializable {
         }
 
         lblTicketsOpen.setText(Main.activeTicketCount);
+        //Update status light
+        statusLight.setFill(communicate.updateStatusLight());
 
         //Add strings to observable list
         for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){

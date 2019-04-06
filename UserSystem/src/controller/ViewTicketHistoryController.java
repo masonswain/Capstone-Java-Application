@@ -29,9 +29,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -53,6 +55,9 @@ public class ViewTicketHistoryController implements Initializable {
     @FXML
     private Label lblTicketsOpen;
     
+    @FXML
+    private Circle statusLight;
+    
     ArrayList<Note> listOfNotes;
 
     /**
@@ -62,8 +67,9 @@ public class ViewTicketHistoryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
+        statusLight.setFill(communicate.updateStatusLight());
         try {
-            listOfNotes=(communicate.getAllTicketNotes(Main.ticket.getTicketID()));
+            listOfNotes=(communicate.getAllCurrentTicketNotes(Main.ticket.getTicketID()));
         } catch (IOException ex) {
             Logger.getLogger(ViewTicketHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }

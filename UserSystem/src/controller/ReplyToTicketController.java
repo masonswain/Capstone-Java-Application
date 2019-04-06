@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -49,6 +50,8 @@ public class ReplyToTicketController implements Initializable {
     private Label lblTicketsOpen, lblNoteOwner;
     @FXML
     private TextArea txtNoteText;
+    @FXML
+    private Circle statusLight;
 
     /**
      * Initializes the controller class.
@@ -58,6 +61,8 @@ public class ReplyToTicketController implements Initializable {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
         lblNoteOwner.setText("Ticket Comment: "+Main.currentUser.getfName()+" "+Main.currentUser.getlName());
+        //Update status light
+        statusLight.setFill(communicate.updateStatusLight());
         
     }    
 
