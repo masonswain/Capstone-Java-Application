@@ -41,6 +41,7 @@ import javafx.stage.Stage;
  */
 public class OpenTicketController implements Initializable {
 
+    @FXML
     private Label lblTicketsOpen;
     @FXML
     private ComboBox cbBuilding;
@@ -52,6 +53,7 @@ public class OpenTicketController implements Initializable {
     private TextArea txtProblemDescription;
     @FXML
     private TextArea txtProblemSubject;
+    @FXML
     private Circle statusLight;
     @FXML
     private Button btnSubmit;
@@ -80,7 +82,7 @@ public class OpenTicketController implements Initializable {
     }    
 
     
-
+    @FXML
     private void CollapseWidget(MouseEvent event) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/widget/WidgetCollapsed.fxml")); // loads main fxml class
             Scene scene = new Scene(root);
@@ -114,6 +116,7 @@ public class OpenTicketController implements Initializable {
             window.show();
     }
 
+    @FXML
     private void gotoWidgetExpanded(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/widget/WidgetExpanded.fxml")); // loads main fxml class
             Scene scene = new Scene(root);
@@ -147,6 +150,7 @@ public class OpenTicketController implements Initializable {
             window.show();
     }
 
+    @FXML
     private void openNewTicket(ActionEvent event) throws IOException {
         //System.out.println("New ticket created");
         //System.out.println(cbBuilding.getValue().toString());

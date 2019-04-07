@@ -62,22 +62,6 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <ImageView fx:id="imgHome" fitHeight="50.0" fitWidth="50.0" layoutX="86.0" layoutY="14.0" onMouseClicked="#gotoTechCommandCenter" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../img/home-button.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Label layoutX="92.0" layoutY="31.0" onMouseClicked="#gotoTechCommandCenter" prefHeight="15.0" prefWidth="39.0" text="Home" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
          </children>
          <effect>
             <ColorAdjust />
@@ -166,6 +150,22 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+      </Label>
+      <ImageView fx:id="imgHome" fitHeight="50.0" fitWidth="50.0" layoutX="936.0" layoutY="166.0" onMouseClicked="#gotoTechCommandCenter" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/home-button.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="941.0" layoutY="212.0" onMouseClicked="#gotoTechCommandCenter" prefHeight="15.0" prefWidth="39.0" text="Home" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Label>
    </children>
 </AnchorPane>
