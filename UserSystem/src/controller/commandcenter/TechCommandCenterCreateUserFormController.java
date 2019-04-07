@@ -34,7 +34,7 @@ public class TechCommandCenterCreateUserFormController implements Initializable 
     @FXML
     private Button btnCancel;
     @FXML
-    private ComboBox<?> cbBuilding;
+    private ComboBox cbAdmin;
 
     /**
      * Initializes the controller class.
@@ -42,6 +42,7 @@ public class TechCommandCenterCreateUserFormController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cbAdmin.getItems().addAll("N","Y");
     }    
     
 }

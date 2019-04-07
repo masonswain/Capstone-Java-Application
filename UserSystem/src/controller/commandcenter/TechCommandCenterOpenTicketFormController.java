@@ -34,7 +34,7 @@ public class TechCommandCenterOpenTicketFormController implements Initializable 
     @FXML
     private Button btnCancel;
     @FXML
-    private ComboBox<?> cbBuilding;
+    private ComboBox cbBuilding;
 
     /**
      * Initializes the controller class.
@@ -42,6 +42,7 @@ public class TechCommandCenterOpenTicketFormController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
     }    
     
 }
