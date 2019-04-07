@@ -13,6 +13,8 @@ import application.setWidgetPosition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -44,9 +46,12 @@ public class TechCommandCenterController implements Initializable {
     @FXML
     private Circle statusLight;
     @FXML
-    private ListView tvUnassignedTicketList;
+    private ListView lvUnassignedTicketList;
+    @FXML
+    private ListView lvAssignedTicketList;
     
-    final ObservableList<String> listItems = FXCollections.observableArrayList();
+    final ObservableList<String> unassignedListItems = FXCollections.observableArrayList();
+    final ObservableList<String> assignedListItems = FXCollections.observableArrayList();
     
     /**
      * Initializes the controller class.
@@ -54,17 +59,39 @@ public class TechCommandCenterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        //Update Ticket Lists
+        if(Main.currentUser!=null) {
+            try {
+                Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+                communicate.updateMainUnassignedTicketsList();
+            } catch (IOException ex) {
+                Logger.getLogger(TechCommandCenterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         lblTicketsOpen.setText(Main.activeTicketCount);        
+        
         //Update status light
         statusLight.setFill(communicate.updateStatusLight());
         
+        /////////  UNASSIGNED TICKETS LIST  ///////////
         //Add strings to observable list
-        for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
-        listItems.add("Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN());
+        for(int i=0; i<Integer.parseInt(Main.unassignedTicketCount);i++){
+            unassignedListItems.add("Subject: "+Main.unassignedTicketList.get(i).getTicketTitle()+"\nCreated: "+Main.unassignedTicketList.get(i).getDateTimeCreated()+"\nUser: "+Main.unassignedTicketList.get(i).getUserUN());
         }
         
         //Add observable list to listview
-        tvUnassignedTicketList.setItems(listItems);
+        lvUnassignedTicketList.setItems(unassignedListItems);
+        
+        
+        /////////  ASSIGNED TICKETS LIST   ////////////
+        //Add strings to observable list
+        for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
+            assignedListItems.add("Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN());
+        }
+        
+        //Add observable list to listview
+        lvAssignedTicketList.setItems(assignedListItems);
     
     }
 
@@ -112,7 +139,84 @@ public class TechCommandCenterController implements Initializable {
     }
     
     @FXML
-    private void openTicketDetails(){
+    private void openUnassignedTicketDetails(MouseEvent event) throws IOException{
+        
+        int i = lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.unassignedTicketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=false;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterDetails.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
+    private void openAssignedTicketDetails(MouseEvent event) throws IOException{
+        
+        int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.ticketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=true;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterDetails.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
     
     }
     

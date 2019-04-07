@@ -69,8 +69,11 @@ public void Login(ActionEvent event) throws Exception {
             String fxmlFile="/fxml/widget/WidgetExpanded.fxml";
             String cssFile="/application/application.css";
             
-            //Update Ticket List
-            Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
+            //Update Ticket Lists
+            Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+            communicate.updateMainUnassignedTicketsList();
+            //System.out.println("LoginController:"+Main.unassignedTicketList.get(0).getUserUN());
+            //System.out.println("LoginController:"+Main.unassignedTicketList.get(0).getTicketID());
             
             if(Main.currentUser.isAdmin){
             fxmlFile="/fxml/commandcenter/TechCommandCenter.fxml";

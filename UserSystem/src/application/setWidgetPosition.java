@@ -18,26 +18,27 @@ public class setWidgetPosition {
         
         double returnedY;
         
-        System.out.println("Screen Height: "+primaryScreenBounds.getHeight());
-        System.out.println("Screen Y: "+yCoordinate);
-        System.out.println("Height: "+nextStageHeight);
-        System.out.println("Screen Y + Height + 5 = "+(+nextStageHeight+5));
+        //Debugging Lines
+        //System.out.println("Screen Height: "+primaryScreenBounds.getHeight());
+        //System.out.println("Screen Y: "+yCoordinate);
+        //System.out.println("Height: "+nextStageHeight);
+        //System.out.println("Screen Y + Height + 5 = "+(+nextStageHeight+5));
         
         //If the window is within 425 px from bottom snap it to bottom
         //else if window is withing 10 px from top snap it to top
         //else keep same window position
         if((yCoordinate+425)>primaryScreenBounds.getHeight()){
-            System.out.println("to close to bottom");
+            //System.out.println("to close to bottom");
             returnedY=(primaryScreenBounds.getHeight() - (nextStageHeight+5));
         }else if((yCoordinate-10)<0){
-            System.out.println("to close to top");
+            //System.out.println("to close to top");
             returnedY=(primaryScreenBounds.getMinY()+10);
         }else {
-            System.out.println("y not changed");
+            //System.out.println("y not changed");
             returnedY=(yCoordinate);
         }
        
-        System.out.println("yCoordinate: "+yCoordinate);
+        //System.out.println("yCoordinate: "+yCoordinate);
         return returnedY;
         
     }
