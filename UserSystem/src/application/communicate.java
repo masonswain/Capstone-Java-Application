@@ -842,7 +842,15 @@ public class communicate {
     //Returns the appropriate color of status light
     public static Color updateStatusLight(){
         
-        if(Integer.parseInt(Main.activeTicketCount)>0){
+        int ticketCount=0;
+        
+        if(Main.currentUser.isAdmin){
+        ticketCount=Integer.parseInt(Main.unassignedTicketCount);
+        }else{
+        ticketCount=Integer.parseInt(Main.activeTicketCount);
+        }
+        
+        if(ticketCount>0){
             return Color.YELLOW;
         }
         if(Integer.parseInt(Main.unreadMessageCount)>0){
@@ -852,59 +860,38 @@ public class communicate {
             return Color.GREEN;
         }
     }
-}
-
-
-
-
-
-
-
-
-
-
-//                  ***  OLD VERSION of getAllCurrentTicketNotes   ***
-/*
     
-    public static ArrayList<Note> getAllCurrentTicketNotes(String ticket_ID) throws IOException{
-    
-        ArrayList<Note> listOfTicketNotes = new ArrayList<Note>();
-        
-        /////////////    VARIABLES    /////////////////
-        ArrayList<Ticket> ticketList = new ArrayList();
+    //Assigns ticket to given user
+    public static boolean assignTicket(String techUN, String ticketID) throws IOException{
+
         String inputFromURL = null;
         String serverResponse;
-        String owner_UN=null;
-        String note_ID=null;
-        String note=null;
-        int noteCount=0;
-        int fromIndex=0;
+        //UPDATE `TICKET` SET `TECH_UN`="jknutson" WHERE TICKET_ID=49
+        System.out.println("techUN: "+techUN);
+        System.out.println("ticketID: "+ticketID);
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/assign-ticket.php";
+           
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "techUN="+techUN+"&ticketID="+ticketID;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
         
-        
-        
-        
-        //////////////    HTTP COMMUNICATION    ////////////////////
-            String url = "http://csc450.joelknutson.net/java/return-all-ticket-notes.php";
-            
-            URL obj = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-            conn.setRequestMethod("POST");
-            String urlParameters= "ticketID="+ticket_ID;
-            
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-            
-            int responseCode = conn.getResponseCode();
-            
-            //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
             while((inputFromURL = in.readLine())!=null){
             response.append(inputFromURL);
@@ -913,45 +900,51 @@ public class communicate {
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
             System.out.println("Server Response: "+serverResponse);
-            
-            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
-            
-            while((fromIndex = serverResponse.indexOf("End User: ", fromIndex))!= -1){
-            noteCount++;
-            fromIndex++;
-            }
-            
-            for(int i=0,startSub=0,endSub=0; i<noteCount ;i++){
-                
-            //Find ticketID information
-            startSub = serverResponse.indexOf("OWNER: ",startSub)+7;
-            endSub = serverResponse.indexOf("<br/>",startSub);
-            owner_UN = serverResponse.substring(startSub,endSub);
-            //Debug Line
-            System.out.println("OWNER: "+owner_UN);
-            
-            //Find ticketTitle information
-            startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+9;
-            endSub = serverResponse.indexOf("<br/>", startSub);
-            note_ID = serverResponse.substring(startSub, endSub);
-            //Debug Line
-            System.out.println("Ticket Title: "+note_ID);
-              
-            //Find endUser information
-            startSub = serverResponse.indexOf("NOTE: ",startSub)+6;
-            endSub = serverResponse.indexOf("<br/>", startSub);
-            note = serverResponse.substring(startSub, endSub);
-            //Debug Line
-            System.out.println("End User: "+note);
-            
-            if(note_ID!=null){
-                listOfTicketNotes.add(new Note(note_ID, Main.ticket.getTicketID(), owner_UN, note));
-            }else{
-            i=-1;
-            }
-            }   
-        
-        return listOfTicketNotes;
+    
+        return true;
     }
-    */
+ 
+    public static boolean closeTicket(Ticket ticket) throws IOException{
+    
+        String inputFromURL = null;
+        String serverResponse;
+        //UPDATE TICKET SET TECH_UN='jknutson', STATUS='closed' WHERE TICKET_ID=57
+        System.out.println("techUN: "+ticket.getTechUN());
+        System.out.println("ticketID: "+ticket.getTicketID());
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/close-ticket.php";
+           
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "techUN="+ticket.getTechUN()+"&ticketID="+ticket.getTicketID();
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+    
+        
+        return true;
+    }
+}
 

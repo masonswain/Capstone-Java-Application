@@ -45,7 +45,7 @@ import javafx.stage.Stage;
 public class TechCommandCenterDetailsController implements Initializable {
 
     @FXML
-    private Label lblTicketsOpen;
+    private Label lblTicketsAvailable;
     @FXML
     private Label lblMessagesWaiting;
     @FXML
@@ -66,6 +66,8 @@ public class TechCommandCenterDetailsController implements Initializable {
     private Label lblSubject;
     @FXML
     private TextArea taTicketHistory;
+    @FXML
+    private TextArea taTicketReply;
     
     public static boolean isAssigned;
     final ObservableList<String> unassignedListItems = FXCollections.observableArrayList();
@@ -92,14 +94,15 @@ public class TechCommandCenterDetailsController implements Initializable {
             }
         }
         
-        lblTicketsOpen.setText(Main.activeTicketCount);        
+        //Update "Ticket(s) Available" counter
+        lblTicketsAvailable.setText(Main.unassignedTicketCount);        
         
         //Update status light
         statusLight.setFill(communicate.updateStatusLight());
         
         try {
             //Debugging Line
-            System.out.println("Checking for UN:"+Main.unassignedTicketList.get(selectedIndex).getUserUN());
+            //System.out.println("Checking for UN:"+Main.unassignedTicketList.get(selectedIndex).getUserUN());
             
             //Get the user object for the username associated with the ticket
             endUser=communicate.getUserByUN(Main.unassignedTicketList.get(selectedIndex).getUserUN());
@@ -141,11 +144,21 @@ public class TechCommandCenterDetailsController implements Initializable {
         
         //Add observable list to listview
         lvAssignedTicketList.setItems(assignedListItems);
+        
+        //Determine which list is being used and update selected list item
         if(isAssigned){
             lvAssignedTicketList.getSelectionModel().select(selectedIndex);
+        }else{
+            lvUnassignedTicketList.getSelectionModel().select(selectedIndex);
         }
     }
 
+    @FXML
+    private void closeCommandCenter(){
+        //Exit Program
+        System.exit(0);
+    }
+    
     @FXML
     private void gotoTechCommandCenterMinimized(MouseEvent event) throws IOException {
         
@@ -184,14 +197,209 @@ public class TechCommandCenterDetailsController implements Initializable {
     }
     
     @FXML
-    private void closeCommandCenter(){
-        //Exit Program
-        System.exit(0);
+    private void gotoTechCommandCenter (MouseEvent event) throws IOException{
+    
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenter.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
+        
+    }
+        
+    @FXML
+    private void openAssignedTicketDetails(MouseEvent event) throws IOException{
+        
+        int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        selectedTicket=Main.ticketList.get(i);
+        selectedIndex=i;
+        isAssigned=true;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterDetails.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
+    
     }
     
     @FXML
-    private void openTicketDetails(){
+    private void openUnassignedTicketDetails(MouseEvent event) throws IOException{
+        
+        int i = lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        selectedTicket=Main.unassignedTicketList.get(i);
+        selectedIndex=i;
+        isAssigned=false;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterDetails.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
     
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
+    private void replyToTicket(MouseEvent event) throws IOException{
+        System.out.println(selectedTicket.getTicketID());
+        System.out.println(Main.currentUser.getuName());
+        System.out.println(taTicketReply.getText());
+        
+        communicate.createTicketNote(selectedTicket.getTicketID(), Main.currentUser.getuName(), taTicketReply.getText());
+        refreshTechCommandCenterDetails(event);
+    }
+    
+    @FXML
+    private void refreshTechCommandCenterDetails(MouseEvent event) throws IOException{
+               
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterDetails.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
+    }
+    
+    @FXML
+    private void assignToMe(MouseEvent event) throws IOException{
+
+        int i = lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        selectedTicket=Main.unassignedTicketList.get(i);
+        selectedIndex=i;
+        isAssigned=true;
+        
+        communicate.assignTicket(Main.currentUser.getuName(), selectedTicket.getTicketID());
+        
+        //refreshTechCommandCenterDetails(event);
+        gotoTechCommandCenter(event);
+        
+    }
+    
+    @FXML
+    private void reassignTicket(MouseEvent event) throws IOException{
+
+        int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        selectedTicket=Main.ticketList.get(i);
+        selectedIndex=i;
+        isAssigned=false;
+        
+        communicate.assignTicket("unassigned", selectedTicket.getTicketID());
+        communicate.updateMainUnassignedTicketsList();
+        
+        //refreshTechCommandCenterDetails(event);
+        gotoTechCommandCenter(event);
+        
+    }
+    
+    @FXML
+    private void closeTicket(MouseEvent event) throws IOException{
+    
+        if(selectedTicket.getTechUN().equalsIgnoreCase("unassigned")){
+        selectedTicket.setTechUN(Main.currentUser.getuName());
+        }
+        selectedIndex--;
+        communicate.closeTicket(selectedTicket);
+        gotoTechCommandCenter(event);
+        
     }
     
 }

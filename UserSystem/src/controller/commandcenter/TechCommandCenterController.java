@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 public class TechCommandCenterController implements Initializable {
 
     @FXML
-    private Label lblTicketsOpen;
+    private Label lblTicketsAvailable;
     @FXML
     private Label lblMessagesWaiting;
     @FXML
@@ -69,7 +69,7 @@ public class TechCommandCenterController implements Initializable {
             }
         }
         
-        lblTicketsOpen.setText(Main.activeTicketCount);        
+        lblTicketsAvailable.setText(Main.unassignedTicketCount);        
         
         //Update status light
         statusLight.setFill(communicate.updateStatusLight());
@@ -93,6 +93,41 @@ public class TechCommandCenterController implements Initializable {
         //Add observable list to listview
         lvAssignedTicketList.setItems(assignedListItems);
     
+    }
+    
+    @FXML
+    private void refreshTechCommandCenter(MouseEvent event) throws IOException{
+               
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenter.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        /////////  Allow undecorated window be dragged     ////////////// 
+    
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
+                @Override
+                public void handle(MouseEvent event) {
+                   xOffset = event.getSceneX();
+                   yOffset = event.getSceneY();
+                } 
+            });
+        
+            // User Screen is able to moved by Mouse.
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                   window.setX(event.getScreenX() - xOffset);
+                   window.setY(event.getScreenY() - yOffset);
+                }
+            });
+        
+        ////////////////////        END      //////////////////////////// 
+        
+        
+        //Set Scene and Show
+        window.setScene(scene);
+        window.show();
     }
 
     @FXML
@@ -218,6 +253,37 @@ public class TechCommandCenterController implements Initializable {
         window.setScene(scene);
         window.show();
     
+    }
+    
+    @FXML
+    private void reassignTicket(MouseEvent event) throws IOException{
+
+        int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.ticketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=false;
+        
+        communicate.assignTicket("unassigned", TechCommandCenterDetailsController.selectedTicket.getTicketID());
+        communicate.updateMainUnassignedTicketsList();
+        
+        //refreshTechCommandCenterDetails(event);
+        refreshTechCommandCenter(event);
+        
+    }
+    
+    @FXML
+    private void assignToMe(MouseEvent event) throws IOException{
+
+        int i = lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.unassignedTicketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=true;
+        
+        communicate.assignTicket(Main.currentUser.getuName(), TechCommandCenterDetailsController.selectedTicket.getTicketID());
+        
+        //refreshTechCommandCenter(event);
+        refreshTechCommandCenter(event);
+        
     }
     
 }

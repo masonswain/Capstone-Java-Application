@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Circle?>
@@ -20,14 +22,14 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Label>
-            <HBox layoutX="345.0" layoutY="37.0" prefHeight="27.0" prefWidth="358.0">
+            <HBox layoutX="337.0" layoutY="37.0" prefHeight="27.0" prefWidth="326.0">
                <children>
-                  <Label fx:id="lblTicketsOpen" alignment="CENTER" prefHeight="27.0" prefWidth="25.0" style="-fx-background-color: MAROON;" text="0" textFill="WHITE">
+                  <Label fx:id="lblTicketsAvailable" alignment="CENTER" prefHeight="27.0" prefWidth="25.0" style="-fx-background-color: MAROON;" text="0" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="28.0" prefWidth="106.0" text="Ticket(s) Open" textFill="#f8f8f8">
+                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="132.0" text="Ticket(s) Available" textFill="#f8f8f8">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -37,7 +39,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="147.0" text="Message(s) Waiting" textFill="#f8f8f8">
+                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="133.0" text="Message(s) Waiting" textFill="#f8f8f8">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -60,6 +62,22 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+            <ImageView fx:id="imgHome" fitHeight="50.0" fitWidth="50.0" layoutX="886.0" layoutY="26.0" onMouseClicked="#gotoTechCommandCenter" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/home-button.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label layoutX="892.0" layoutY="43.0" onMouseClicked="#gotoTechCommandCenter" prefHeight="15.0" prefWidth="39.0" text="Home" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
          </children>
          <effect>
             <ColorAdjust />
@@ -82,37 +100,37 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnOpenTicket" layoutX="691.0" layoutY="559.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Close Ticket" textFill="WHITE">
+      <Button fx:id="btnOpenTicket" layoutX="691.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#closeTicket" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Close Ticket" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnCreateUser" layoutX="846.0" layoutY="559.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reply" textFill="WHITE">
+      <Button fx:id="btnReply" layoutX="846.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#replyToTicket" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reply" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnUnassignedTicketListDetails" layoutX="351.0" layoutY="559.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
+      <Button fx:id="btnUnassignedTicketListDetails" layoutX="351.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#openUnassignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="505.0" layoutY="559.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
+      <Button layoutX="505.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#assignToMe" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnAssignedTicketListDetails" layoutX="14.0" layoutY="558.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
+      <Button fx:id="btnAssignedTicketListDetails" layoutX="14.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openAssignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="169.0" layoutY="558.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
+      <Button fx:id="btnReassign" layoutX="169.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#reassignTicket" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextArea fx:id="taTicketHistory" editable="false" layoutX="691.0" layoutY="283.0" prefHeight="270.0" prefWidth="300.0" wrapText="true" />
+      <TextArea fx:id="taTicketHistory" editable="false" layoutX="691.0" layoutY="272.0" prefHeight="200.0" prefWidth="300.0" wrapText="true" />
       <Label fx:id="lblName" layoutX="691.0" layoutY="153.0" prefHeight="20.0" prefWidth="300.0" text="Name: " textFill="#fcfcfc">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -138,7 +156,13 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="691.0" layoutY="263.0" prefHeight="20.0" prefWidth="300.0" text="Comments" textFill="#fcfcfc" underline="true">
+      <Label layoutX="691.0" layoutY="253.0" prefHeight="20.0" prefWidth="300.0" text="Comment History" textFill="#fcfcfc" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="taTicketReply" layoutX="691.0" layoutY="492.0" prefHeight="60.0" prefWidth="300.0" wrapText="true" />
+      <Label layoutX="691.0" layoutY="472.0" prefHeight="20.0" prefWidth="300.0" text="Reply" textFill="#fcfcfc" underline="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
