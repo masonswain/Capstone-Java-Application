@@ -286,4 +286,29 @@ public class TechCommandCenterController implements Initializable {
         
     }
     
+    //Administrator Tools
+    @FXML
+    private void newOpenTicketForm(MouseEvent event) throws IOException{
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterOpenTicketForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
+    private void newCreateUserForm(MouseEvent event) throws IOException{
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterCreateUserForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
 }

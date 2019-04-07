@@ -62,7 +62,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <ImageView fx:id="imgHome" fitHeight="50.0" fitWidth="50.0" layoutX="886.0" layoutY="26.0" onMouseClicked="#gotoTechCommandCenter" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgHome" fitHeight="50.0" fitWidth="50.0" layoutX="86.0" layoutY="14.0" onMouseClicked="#gotoTechCommandCenter" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../img/home-button.png" />
                </image>
@@ -70,7 +70,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Label layoutX="892.0" layoutY="43.0" onMouseClicked="#gotoTechCommandCenter" prefHeight="15.0" prefWidth="39.0" text="Home" textFill="WHITE">
+            <Label layoutX="92.0" layoutY="31.0" onMouseClicked="#gotoTechCommandCenter" prefHeight="15.0" prefWidth="39.0" text="Home" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
