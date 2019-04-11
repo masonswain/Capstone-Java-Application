@@ -5,6 +5,7 @@
  */
 package controller.commandcenter;
 
+import application.Internal;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
@@ -98,7 +99,7 @@ public class TechCommandCenterDetailsController implements Initializable {
         lblTicketsAvailable.setText(Main.unassignedTicketCount);        
         
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
         
         try {
             //Debugging Line

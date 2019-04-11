@@ -5,6 +5,7 @@
  */
 package controller.widget;
 
+import application.Internal;
 import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
@@ -60,7 +61,7 @@ public class ViewTicketCommentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lblTicketsOpen.setText(Main.activeTicketCount);
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
         try {
             currentNote=communicate.getCurrentTicketNote(ticketID);
             

@@ -5,6 +5,7 @@
  */
 package controller.commandcenter;
 
+import application.Internal;
 import application.Main;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
@@ -72,7 +73,7 @@ public class TechCommandCenterController implements Initializable {
         lblTicketsAvailable.setText(Main.unassignedTicketCount);        
         
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
         
         /////////  UNASSIGNED TICKETS LIST  ///////////
         //Add strings to observable list

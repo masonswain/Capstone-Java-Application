@@ -5,6 +5,7 @@
  */
 package controller.widget;
 
+import application.Internal;
 import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
@@ -66,7 +67,7 @@ public class ReplyToTicketController implements Initializable {
         lblNoteOwner.setText("Ticket Comment: "+Main.currentUser.getfName()+" "+Main.currentUser.getlName());
         
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
         
     }    
 

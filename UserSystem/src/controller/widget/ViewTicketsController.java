@@ -5,6 +5,7 @@
  */
 package controller.widget;
 
+import application.Internal;
 import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
@@ -73,7 +74,7 @@ public class ViewTicketsController implements Initializable {
 
         lblTicketsOpen.setText(Main.activeTicketCount);
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
 
         //Add strings to observable list
         for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){

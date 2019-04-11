@@ -5,6 +5,7 @@
  */
 package controller.widget;
 
+import application.Internal;
 import application.setWidgetPosition;
 import application.Main;
 import static application.Main.xOffset;
@@ -75,7 +76,7 @@ public class OpenTicketController implements Initializable {
         //Update GUI Ticket Count
         lblTicketsOpen.setText(Main.activeTicketCount);
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
         
         cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
         

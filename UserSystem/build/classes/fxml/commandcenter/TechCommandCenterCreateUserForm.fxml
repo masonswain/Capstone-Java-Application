@@ -10,24 +10,26 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commandcenter.TechCommandCenterCreateUserFormController">
    <children>
-      <TextField fx:id="txtRoomNum" layoutX="108.0" layoutY="55.0" prefHeight="30.0" prefWidth="182.0" />
-      <TextField fx:id="txtPhone" layoutX="108.0" layoutY="95.0" prefHeight="30.0" prefWidth="182.0" />
+      <TextField fx:id="txtFName" layoutX="108.0" layoutY="55.0" prefHeight="30.0" prefWidth="182.0" />
+      <TextField fx:id="txtLName" layoutX="108.0" layoutY="95.0" prefHeight="30.0" prefWidth="182.0" />
+      <TextField fx:id="txtUName" layoutX="108.0" layoutY="135.0" prefHeight="30.0" prefWidth="182.0" />
+      <TextField fx:id="txtAuthPW" accessibleRole="PASSWORD_FIELD" layoutX="108.0" layoutY="175.0" prefHeight="30.0" prefWidth="182.0" />
+      <ComboBox fx:id="cbAdmin" layoutX="108.0" layoutY="215.0" prefHeight="30.0" prefWidth="55.0" />
+      <Button id="submit" fx:id="btnSubmit" layoutX="8.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="30.0" prefWidth="132.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Submit" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="cancel" fx:id="btnCancel" layoutX="155.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="30.0" prefWidth="132.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Cancel" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
       <Label layoutX="6.0" layoutY="55.0" prefHeight="30.0" prefWidth="110.0" text="First Name:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnSubmit" layoutX="8.0" layoutY="360.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Submit" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btnCancel" layoutX="155.0" layoutY="360.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Cancel" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <ComboBox fx:id="cbAdmin" layoutX="108.0" layoutY="215.0" prefHeight="30.0" prefWidth="55.0" />
       <Label layoutX="8.0" layoutY="215.0" prefHeight="30.0" prefWidth="75.0" text="Admin: " textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -48,12 +50,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPhone1" layoutX="108.0" layoutY="135.0" prefHeight="30.0" prefWidth="182.0" />
       <Label layoutX="8.0" layoutY="175.0" prefHeight="30.0" prefWidth="99.0" text="Password:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPhone11" layoutX="108.0" layoutY="175.0" prefHeight="30.0" prefWidth="182.0" />
    </children>
 </AnchorPane>

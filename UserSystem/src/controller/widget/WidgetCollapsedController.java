@@ -5,6 +5,7 @@
  */
 package controller.widget;
 
+import application.Internal;
 import application.setWidgetPosition;
 import static application.Main.xOffset;
 import static application.Main.yOffset;
@@ -40,7 +41,7 @@ public class WidgetCollapsedController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Update status light
-        statusLight.setFill(communicate.updateStatusLight());
+        statusLight.setFill(Internal.updateStatusLight());
     }    
 
     @FXML

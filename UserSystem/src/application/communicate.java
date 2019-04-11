@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 public class communicate {
     
 
+    /////  USER  /////
     //authenticate takes a username and password as a string and sends it 
     //via POST to a PHP script that determines whether the credentials are correct
     //Uses server file "authenticate.php"
@@ -207,6 +208,57 @@ public class communicate {
             return user;
     }
     
+    public static boolean createNewUser(String fName, String lName, String uName,String authPW, String isAdmin) throws IOException{
+    
+        boolean result = false;
+        
+        String inputFromURL = null;            
+            
+            //Reference to Sending GET Request and returning data
+            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+            //Example GET/POST Request URL
+            String url = "http://csc450.joelknutson.net/java/create-user.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+           
+            String urlParameters= "fname="+fName+"&lname="+lName+"&uname="+uName+"&authpw="+authPW+"&isAdmin="+isAdmin;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+response.toString());
+            
+            int success=response.toString().indexOf("New user: "+fName+" "+lName+" created successfully");
+            
+            //Debugging Line - output the location of the comma or -1 if not found
+            //System.out.println("Comma Point: "+commaPt);
+            if(success>-1){
+                result=true; 
+            }
+        
+        return result;
+    }
+    
+    
+    /////  TICKET  /////
     // Returns all the active list of Tickets associated with a tech username
     //Uses server file "return-user-tickets.php"
     public static ArrayList<Ticket> updateAllActiveUserTickets(String uName) throws IOException {	
@@ -646,6 +698,94 @@ public class communicate {
                     
     }
     
+    //Assigns ticket to given user
+    public static boolean assignTicket(String techUN, String ticketID) throws IOException{
+
+        String inputFromURL = null;
+        String serverResponse;
+        //UPDATE `TICKET` SET `TECH_UN`="jknutson" WHERE TICKET_ID=49
+        System.out.println("techUN: "+techUN);
+        System.out.println("ticketID: "+ticketID);
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/assign-ticket.php";
+           
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "techUN="+techUN+"&ticketID="+ticketID;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+    
+        return true;
+    }
+ 
+    public static boolean closeTicket(Ticket ticket) throws IOException{
+    
+        String inputFromURL = null;
+        String serverResponse;
+        //UPDATE TICKET SET TECH_UN='jknutson', STATUS='closed' WHERE TICKET_ID=57
+        System.out.println("techUN: "+ticket.getTechUN());
+        System.out.println("ticketID: "+ticket.getTicketID());
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/close-ticket.php";
+           
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "techUN="+ticket.getTechUN()+"&ticketID="+ticket.getTicketID();
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+    
+        
+        return true;
+    }
+    
+    
+    //////  NOTE  //////
     // Returns all the active list of Tickets associated with a tech username
     public static Note getCurrentTicketNote(String ticket_ID) throws IOException {	
         
@@ -839,112 +979,7 @@ public class communicate {
                     
     }
     
-    //Returns the appropriate color of status light
-    public static Color updateStatusLight(){
-        
-        int ticketCount=0;
-        
-        if(Main.currentUser.isAdmin){
-        ticketCount=Integer.parseInt(Main.unassignedTicketCount);
-        }else{
-        ticketCount=Integer.parseInt(Main.activeTicketCount);
-        }
-        
-        if(ticketCount>0){
-            return Color.YELLOW;
-        }
-        if(Integer.parseInt(Main.unreadMessageCount)>0){
-            return Color.RED;
-        }
-        else{
-            return Color.GREEN;
-        }
-    }
     
-    //Assigns ticket to given user
-    public static boolean assignTicket(String techUN, String ticketID) throws IOException{
-
-        String inputFromURL = null;
-        String serverResponse;
-        //UPDATE `TICKET` SET `TECH_UN`="jknutson" WHERE TICKET_ID=49
-        System.out.println("techUN: "+techUN);
-        System.out.println("ticketID: "+ticketID);
-        //Reference to Sending GET Request and returning data
-        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-        //Example GET/POST Request URL
-        String url = "http://csc450.joelknutson.net/java/assign-ticket.php";
-           
-        URL obj = new URL(url);
-        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-        conn.setRequestMethod("POST");
-           
-        String urlParameters= "techUN="+techUN+"&ticketID="+ticketID;
-            
-        conn.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-          
-        int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            while((inputFromURL = in.readLine())!=null){
-            response.append(inputFromURL);
-            }
-            in.close();
-            serverResponse=response.toString();
-            //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
-    
-        return true;
-    }
- 
-    public static boolean closeTicket(Ticket ticket) throws IOException{
-    
-        String inputFromURL = null;
-        String serverResponse;
-        //UPDATE TICKET SET TECH_UN='jknutson', STATUS='closed' WHERE TICKET_ID=57
-        System.out.println("techUN: "+ticket.getTechUN());
-        System.out.println("ticketID: "+ticket.getTicketID());
-        //Reference to Sending GET Request and returning data
-        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-        //Example GET/POST Request URL
-        String url = "http://csc450.joelknutson.net/java/close-ticket.php";
-           
-        URL obj = new URL(url);
-        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-        conn.setRequestMethod("POST");
-           
-        String urlParameters= "techUN="+ticket.getTechUN()+"&ticketID="+ticket.getTicketID();
-            
-        conn.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-          
-        int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            while((inputFromURL = in.readLine())!=null){
-            response.append(inputFromURL);
-            }
-            in.close();
-            serverResponse=response.toString();
-            //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
-    
-        
-        return true;
-    }
+       
 }
 
