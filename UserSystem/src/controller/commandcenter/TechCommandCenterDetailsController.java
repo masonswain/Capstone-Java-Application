@@ -106,7 +106,7 @@ public class TechCommandCenterDetailsController implements Initializable {
             //System.out.println("Checking for UN:"+Main.unassignedTicketList.get(selectedIndex).getUserUN());
             
             //Get the user object for the username associated with the ticket
-            endUser=communicate.getUserByUN(Main.unassignedTicketList.get(selectedIndex).getUserUN());
+            endUser=communicate.getUserByUN(selectedTicket.getUserUN());
             
             //Update Ticket Details labels and comments
             lblName.setText("Name:  "+endUser.getfName()+" "+endUser.getlName());

@@ -382,8 +382,8 @@ public class communicate {
             }
             //Debug Line
             //System.out.println("Ticket Count: "+ticketCount);
-            Main.activeTicketCount=Integer.toString(ticketCount);
-            Main.ticketList=ticketList;
+            Main.unassignedTicketCount=Integer.toString(ticketCount);
+            Main.unassignedTicketList=ticketList;
             
         
         return ticketList;
@@ -647,55 +647,59 @@ public class communicate {
     }
     
     //Uses server file "create-ticket.php"
-    public static void createTicket(String building, String room, String phone, String description, String subject) throws IOException{
+    public static boolean createTicket(String building, String room, String phone, String description, String subject) throws IOException{
     
-            String inputFromURL = null;
-            String userUN = Main.currentUser.getuName();
+        boolean result = false;
+        String inputFromURL = null;
+        String userUN = Main.currentUser.getuName();
             
             
-            //Reference to Sending GET Request and returning data
-            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-            //Example GET/POST Request URL
-            String url = "http://csc450.joelknutson.net/java/create-ticket.php";
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/create-ticket.php";
             
-            URL obj = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-            conn.setRequestMethod("POST");
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
            
-            String urlParameters= "ticketTitle="+subject+"&techUN=unassigned"+"&userUN="+userUN+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone+"&description="+description;
+        String urlParameters= "ticketTitle="+subject+"&techUN=unassigned"+"&userUN="+userUN+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone+"&description="+description;
+           
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
             
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
             
-            int responseCode = conn.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            while((inputFromURL = in.readLine())!=null){
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
             response.append(inputFromURL);
-            }
-            in.close();
+        }
+        
+        in.close();   
             
-            //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+response.toString());
-            
-            int success=response.toString().indexOf("New record created successfully");
-            
-            //Debugging Line - output the location of the comma or -1 if not found
-            //System.out.println("Comma Point: "+commaPt);
-            if(success>-1){
-                System.out.println("Ticket Created"); 
-            }
-            else{
-                System.out.println("Request Failed");
-            }
-                    
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
+          
+        int success=response.toString().indexOf("New record created successfully");
+          
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+        if(success>-1){
+            //System.out.println("Ticket Created");
+            result=true;
+        }
+        else{
+            //System.out.println("Request Failed");
+        }
+        
+        return result;
     }
     
     //Assigns ticket to given user
