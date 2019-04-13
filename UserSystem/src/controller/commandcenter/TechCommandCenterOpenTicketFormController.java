@@ -63,6 +63,7 @@ public class TechCommandCenterOpenTicketFormController implements Initializable 
         System.out.println("There was an error creating the ticket");
         }
     }
+    
     @FXML
     private void cancel(MouseEvent event) throws IOException{
     

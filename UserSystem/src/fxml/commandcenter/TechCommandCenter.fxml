@@ -64,49 +64,59 @@
             <ColorAdjust />
          </effect>
       </AnchorPane>
-      <ListView fx:id="lvAssignedTicketList" layoutX="14.0" layoutY="153.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: WHITE;" />
-      <ListView fx:id="lvUnassignedTicketList" layoutX="350.0" layoutY="153.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: WHITE;" />
-      <Label alignment="CENTER" layoutX="14.0" layoutY="123.0" prefHeight="30.0" prefWidth="300.0" text="Assigned Ticket List" textFill="WHITE">
+      <Label id="Administrator Tools" alignment="CENTER" layoutX="691.0" layoutY="127.0" prefHeight="30.0" prefWidth="300.0" text="Administrator Tools" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="350.0" layoutY="123.0" prefHeight="30.0" prefWidth="300.0" text="Unassigned Ticket List" textFill="WHITE">
+      <Button id="Open Ticket" fx:id="btnOpenTicket" layoutX="691.0" layoutY="157.0" mnemonicParsing="false" onMouseClicked="#newOpenTicketForm" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Open Ticket" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="Create User" fx:id="btnCreateUser" layoutX="691.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#newCreateUserForm" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Create User" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label id="ATL" alignment="CENTER" layoutX="14.0" layoutY="123.0" prefHeight="30.0" prefWidth="300.0" text="Assigned Ticket List" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="691.0" layoutY="127.0" prefHeight="30.0" prefWidth="300.0" text="Administrator Tools" textFill="WHITE">
+      <ListView id="Assigned Ticket List" fx:id="lvAssignedTicketList" layoutX="14.0" layoutY="153.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: WHITE;" />
+      <Button id="ATL - Details" layoutX="14.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openAssignedTicketDetails" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="ATL - Assign" layoutX="119.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#reassignTicketForm" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="ATL - Unassign" layoutX="224.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#unassignTicket" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Unassign" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label id="UTL" alignment="CENTER" layoutX="350.0" layoutY="123.0" prefHeight="30.0" prefWidth="300.0" text="Unassigned Ticket List" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnOpenTicket" layoutX="691.0" layoutY="157.0" mnemonicParsing="false" onMouseClicked="#newOpenTicketForm" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Open Ticket" textFill="WHITE">
+      <ListView id="Unassigned Ticket List" fx:id="lvUnassignedTicketList" layoutX="350.0" layoutY="153.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: WHITE;" />
+      <Button id="UTL - Details" fx:id="btnUnassignedTicketListDetails" layoutX="350.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openUnassignedTicketDetails" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnCreateUser" layoutX="691.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#newCreateUserForm" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Create User" textFill="WHITE">
+      <Button id="UTL - Assign" layoutX="455.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#assignTicketForm" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnUnassignedTicketListDetails" layoutX="350.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openUnassignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="505.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#assignToMe" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="14.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openAssignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button layoutX="169.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#reassignTicket" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
+      <Button id="UTL - Assign to Me" layoutX="560.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#assignToMe" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

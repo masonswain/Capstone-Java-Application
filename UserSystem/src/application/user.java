@@ -32,6 +32,15 @@ public class user {
     this.authenticated=authenticated;
     }
     
+    public user(String fName, String lName, String uName, boolean isAdmin, boolean authenticated){
+    this.fName=fName;
+    this.lName=lName;
+    this.uName=uName;
+    this.isAdmin=isAdmin;
+    this.authenticated=authenticated;
+    
+    }
+    
     public String getfName(){
     return fName;
     }
@@ -40,5 +49,17 @@ public class user {
     }
     public String getuName(){
     return uName;
+    }
+    
+    public void setuName(String uName){
+    this.uName=uName;
+    }
+    
+    public void setfName(String fName){
+    this.fName=fName;
+    }
+    
+    public void setlName(String lName){
+    this.lName=lName;
     }
 }

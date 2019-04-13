@@ -94,22 +94,22 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnUnassignedTicketListDetails" layoutX="351.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#openUnassignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
+      <Button fx:id="btnUnassignedTicketListDetails" layoutX="351.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#openUnassignedTicketDetails" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="505.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#assignToMe" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
+      <Button layoutX="561.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#assignToMe" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign to Me" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnAssignedTicketListDetails" layoutX="14.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openAssignedTicketDetails" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
+      <Button fx:id="btnAssignedTicketListDetails" layoutX="14.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#openAssignedTicketDetails" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Details" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnReassign" layoutX="169.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#reassignTicket" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
+      <Button fx:id="btnReassign" layoutX="224.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#unassignTicket" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Unassign" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -167,5 +167,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
+      <Button fx:id="btnAssignedTicketListDetails1" layoutX="119.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#reassignTicketForm" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Reassign" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnAssignedTicketListDetails11" layoutX="456.0" layoutY="559.0" mnemonicParsing="false" onMouseClicked="#assignTicketForm" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Assign" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

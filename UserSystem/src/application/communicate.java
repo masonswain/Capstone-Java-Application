@@ -120,53 +120,54 @@ public class communicate {
     public static user getUserByUN(String uName) throws IOException{
     
         String inputFromURL = null;
-            String fName;
-            String lName;
-            String isAdmin="U";
+        String fName;
+        String lName;
+        String isAdmin="U";
             
-            int startSub=0;
-            int endSub=0;
+        int startSub=0;
+        int endSub=0;
             
-            user user = new user();
+        user user = new user();
             
-            //Reference to Sending GET Request and returning data
-            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-            //Example GET/POST Request URL
-            String url = "http://csc450.joelknutson.net/java/return-user-by-username.php";
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/return-user-by-username.php";
             
-            URL obj = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-            conn.setRequestMethod("POST");
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
            
-            String urlParameters= "un="+uName;
+        String urlParameters= "un="+uName;
             
-            conn.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
             
-            int responseCode = conn.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
             
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            while((inputFromURL = in.readLine())!=null){
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
             response.append(inputFromURL);
-            }
-            in.close();
+        }
+        
+        in.close();
             
-            //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+response.toString());
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
             
-            String serverResponse=response.toString();
+        String serverResponse=response.toString();
 
-            //Debugging Line - output the location of the comma or -1 if not found
-            //System.out.println("Comma Point: "+commaPt);
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
 
-            if(!serverResponse.contains("No User Found")){
+        if(!serverResponse.contains("No User Found")){
     
             
             //Find fName information
@@ -175,37 +176,134 @@ public class communicate {
             fName = serverResponse.substring(startSub,endSub);
             //Debug Line
             System.out.println("First Name: "+fName);
-            
+
             //Find lName information
             startSub = serverResponse.indexOf("lName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             lName = serverResponse.substring(startSub,endSub);
             //Debug Line
             System.out.println("Last Name: "+lName);
-            
+
             //Find isAdmin information
             startSub = serverResponse.indexOf("isAdmin: ",startSub)+9;
             endSub = serverResponse.indexOf("<br/>",startSub);
             isAdmin = serverResponse.substring(startSub,endSub);
             //Debug Line
             System.out.println("Admin: "+isAdmin);
-            
+
             //update user object
             user.fName = fName;
             user.lName = lName;
             user.uName = uName;
             user.isAdmin = isAdmin.equalsIgnoreCase("Y");
             user.authenticated = (fName!=null);
-            
+
             //Debugging Line - output object variables to prove object creation and variable assignment
             //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
+
+        }else{
+           System.out.println("No User Found");
+        }
             
-            }
-            else{
-                System.out.println("No User Found");
+        return user;
+    }
+    
+    public static ArrayList<user> getListOfAdmins() throws IOException{
+    
+        ArrayList<user> adminList = new ArrayList();
+        
+        String inputFromURL = null;
+        String fName;
+        String lName;
+        String uName;
+        int adminCount=0;
+        int fromIndex=0;
+            
+        int startSub=0;
+        int endSub=0;
+            
+        user user = new user();
+            
+        String url = "http://csc450.joelknutson.net/java/return-all-admins.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        //wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+            
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+            
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+        }
+        
+        in.close();
+            
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
+            
+        String serverResponse=response.toString();
+
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+
+        if(!serverResponse.contains("No User Found")){
+    
+            while((fromIndex = serverResponse.indexOf("fName: ", fromIndex))!= -1){
+            adminCount++;
+            fromIndex++;
             }
             
-            return user;
+            //Create and add Tickets list            
+            for(int i=0; i < adminCount; i++){
+            //Find fName information
+            startSub = serverResponse.indexOf("fName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            fName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("First Name: "+fName);
+
+            //Find lName information
+            startSub = serverResponse.indexOf("lName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            lName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Last Name: "+lName);
+
+            //Find isAdmin information
+            startSub = serverResponse.indexOf("uName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            uName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Username: "+uName);
+
+            //update user object
+            user.fName = fName;
+            user.lName = lName;
+            user.uName = uName;
+            user.isAdmin = uName.equalsIgnoreCase("Y");
+            user.authenticated = (fName!=null);
+
+            adminList.add(new user(fName, lName, uName, true, false));
+            //adminList.add(user);
+            //Debugging Line - output object variables to prove object creation and variable assignment
+            //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
+            }
+        }else{
+           System.out.println("No User Found");
+        }
+        
+        return adminList;
     }
     
     public static boolean createNewUser(String fName, String lName, String uName,String authPW, String isAdmin) throws IOException{

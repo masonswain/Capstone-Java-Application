@@ -130,6 +130,10 @@ public class TechCommandCenterController implements Initializable {
         window.setScene(scene);
         window.show();
     }
+    
+    public void refresh(MouseEvent event) throws IOException{
+    refreshTechCommandCenter(event);
+    }
 
     @FXML
     private void gotoTechCommandCenterMinimized(MouseEvent event) throws IOException {
@@ -257,7 +261,41 @@ public class TechCommandCenterController implements Initializable {
     }
     
     @FXML
-    private void reassignTicket(MouseEvent event) throws IOException{
+    private void assignTicketForm(MouseEvent event) throws IOException{
+        
+        int i = lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.unassignedTicketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=false;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterAssignTicketForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
+    private void reassignTicketForm(MouseEvent event) throws IOException{
+        
+        int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        TechCommandCenterDetailsController.selectedTicket=Main.ticketList.get(i);
+        TechCommandCenterDetailsController.selectedIndex=i;
+        TechCommandCenterDetailsController.isAssigned=false;
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterAssignTicketForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
+    private void unassignTicket(MouseEvent event) throws IOException{
 
         int i = lvAssignedTicketList.getSelectionModel().getSelectedIndex();
         TechCommandCenterDetailsController.selectedTicket=Main.ticketList.get(i);
@@ -311,5 +349,7 @@ public class TechCommandCenterController implements Initializable {
         window.show();
     
     }
+    
+    
     
 }
