@@ -60,17 +60,20 @@ public class TechCommandCenterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //Update Ticket Lists
+        //Update Ticket List and unread message counter
         if(Main.currentUser!=null) {
             try {
                 Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
                 communicate.updateMainUnassignedTicketsList();
+                communicate.updateUnreadMessages(Main.currentUser.getuName());
             } catch (IOException ex) {
                 Logger.getLogger(TechCommandCenterController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
+        //Update Ticket & Note Counters
         lblTicketsAvailable.setText(Main.unassignedTicketCount);        
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
         
         //Update status light
         statusLight.setFill(Internal.updateStatusLight());
@@ -87,13 +90,24 @@ public class TechCommandCenterController implements Initializable {
         
         /////////  ASSIGNED TICKETS LIST   ////////////
         //Add strings to observable list
+        String notification="";
+        String endNotification="";
         for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
-            assignedListItems.add("Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN());
+            //System.out.println("Unread Ticket List index 0: "+Main.unreadTicketIDList.get(0));
+            //System.out.println(Main.ticketList.get(i).getTicketID());
+            if(Main.unreadTicketIDList.contains(Main.ticketList.get(i).getTicketID())){
+                notification =    "===== UNREAD MESSAGE(S) WAITING =====\n";
+                endNotification="\n===============================";
+            }else{
+                notification = "";
+                endNotification="";
+            }
+            assignedListItems.add(notification+"Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN()+endNotification);
         }
         
         //Add observable list to listview
         lvAssignedTicketList.setItems(assignedListItems);
-    
+           
     }
     
     @FXML

@@ -480,8 +480,8 @@ public class communicate {
             }
             //Debug Line
             //System.out.println("Ticket Count: "+ticketCount);
-            Main.unassignedTicketCount=Integer.toString(ticketCount);
-            Main.unassignedTicketList=ticketList;
+            Main.activeTicketCount=Integer.toString(ticketCount);
+            Main.ticketList=ticketList;
             
         
         return ticketList;
@@ -1056,10 +1056,9 @@ public class communicate {
 
     //Creates a Ticket Note in DB
     public static void createTicketNote(String ticketID, String ownerUN, String ticketNote) throws MalformedURLException, ProtocolException, IOException{
-    
-        //Reference to Sending GET Request and returning data
-        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-        //Example GET/POST Request URL
+        
+        //create-note.php will create a note for the current user and clear the unread flag for other user notes
+        //associated with the ticket ID
         String url = "http://csc450.joelknutson.net/java/create-note.php";
             
         URL obj = new URL(url);
@@ -1081,7 +1080,89 @@ public class communicate {
                     
     }
     
+    public static void updateUnreadMessages(String uName) throws IOException{
     
+        ArrayList<String> ticketIDList = new ArrayList();
+        String authenticationKey="VZg9h08WW2LIweUpJIwBPFcp12JvUa0z";
+        String listOfTicketIDs="";
+        int unreadNoteCount = 0;
+        String inputFromURL = null;
+        String serverResponse;
+        int fromIndex=0;
+        
+        
+        for(int i=0; i<Main.ticketList.size();i++){
+            listOfTicketIDs=listOfTicketIDs+"TICKET_ID="+Main.ticketList.get(i).getTicketID()+" ";
+            if((i+1)<Main.ticketList.size()){
+            listOfTicketIDs=listOfTicketIDs+"OR ";
+            }
+        }
+        
+        //Debug Line for String sent to PHP script
+        System.out.println(listOfTicketIDs);
+        
+        //////////////    HTTP COMMUNICATION    ////////////////////
+            String url = "http://csc450.joelknutson.net/java/return-unread-ticket-notes.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters= "ticketIDString="+listOfTicketIDs+"&uName="+Main.currentUser.getuName()+"&authKey="+authenticationKey;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            
+            //Debugging Log Info
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+            
+            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
+            
+            //Count the number of tickets
+            while((fromIndex = serverResponse.indexOf("NOTE_ID: ", fromIndex))!= -1){
+            unreadNoteCount++;
+            fromIndex++;
+            }
+            
+            if(unreadNoteCount>0){
+                //Create and add Tickets list            
+                for(int i=0, startSub=0, endSub=0; i < unreadNoteCount; i++){
+                    //Find ticketID information
+                    startSub = serverResponse.indexOf("TICKET_ID: ",startSub)+11;
+                    endSub = serverResponse.indexOf("<br/>",startSub);
+                    String ticketID = serverResponse.substring(startSub,endSub);
+                    //Debug Line
+                    //System.out.println("Ticket ID: "+ticketID);
+
+                    ticketIDList.add(ticketID);
+
+                }
+                Main.unreadTicketIDList=ticketIDList;
+            } else{
+                ticketIDList.add("0");
+            }
+            
+            System.out.println("Unread Note Count: "+unreadNoteCount);
+            Main.unreadMessageCount=Integer.toString(unreadNoteCount);
+            Main.unreadTicketIDList=ticketIDList;
+        
+    }
        
 }
 

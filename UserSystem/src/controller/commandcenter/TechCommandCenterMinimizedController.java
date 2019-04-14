@@ -14,6 +14,8 @@ import application.setWidgetPosition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +45,18 @@ public class TechCommandCenterMinimizedController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-                
+        
+        //Update Ticket Lists
+        if(Main.currentUser!=null) {
+            try {
+                Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+                communicate.updateMainUnassignedTicketsList();
+                communicate.updateUnreadMessages(Main.currentUser.getuName());
+            } catch (IOException ex) {
+                Logger.getLogger(TechCommandCenterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         //Update status light
         statusLight.setFill(Internal.updateStatusLight());
     

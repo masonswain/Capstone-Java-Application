@@ -5,6 +5,10 @@
  */
 package application;
 
+import controller.widget.WidgetExpandedController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 /**
@@ -22,14 +26,28 @@ public class Internal {
         } else {
             ticketCount = Integer.parseInt(Main.activeTicketCount);
         }
+        if (Integer.parseInt(Main.unreadMessageCount) > 0) {
+            return Color.RED;
+        }
         if (ticketCount > 0) {
             return Color.YELLOW;
         }
-        if (Integer.parseInt(Main.unreadMessageCount) > 0) {
-            return Color.RED;
-        } else {
+        else{
             return Color.GREEN;
         }
+    }
+    
+    public static void intializeWidgetStatus(){
+    if(Main.currentUser!=null) {
+            //Update Ticket List
+            try {
+                Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
+                communicate.updateUnreadMessages(Main.currentUser.getuName());
+            } catch (IOException ex) {
+                Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    Main.statusLightColor=updateStatusLight();
     }
     
 }

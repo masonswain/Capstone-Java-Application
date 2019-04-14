@@ -53,6 +53,8 @@ public class ViewTicketsController implements Initializable {
     @FXML
     private Label lblTicketsOpen;
     @FXML
+    private Label lblMessagesWaiting;
+    @FXML
     private ListView tvTicketList;
     @FXML
     private Circle statusLight;
@@ -66,19 +68,27 @@ public class ViewTicketsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
-        try {
-           communicate.updateAllActiveUserTickets(Main.currentUser.uName);
-        } catch (IOException ex) {
-            Logger.getLogger(ViewTicketsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Internal.intializeWidgetStatus();
 
         lblTicketsOpen.setText(Main.activeTicketCount);
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
         //Update status light
-        statusLight.setFill(Internal.updateStatusLight());
+        statusLight.setFill(Main.statusLightColor);
 
         //Add strings to observable list
+        String notification="";
+        String endNotification="";
+        
         for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
-        listItems.add(Main.ticketList.get(i).getTicketTitle()+"  \nCreated: "+Main.ticketList.get(i).getDateTimeCreated());
+        if(Main.unreadTicketIDList.contains(Main.ticketList.get(i).getTicketID())){
+                notification =    "===== UNREAD MESSAGE(S) WAITING =====\n";
+                endNotification="\n===============================";
+            }else{
+                notification = "";
+                endNotification="";
+            }    
+        listItems.add(notification+Main.ticketList.get(i).getTicketTitle()+"  \nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+endNotification);
         }
         
         //Add observable list to listview

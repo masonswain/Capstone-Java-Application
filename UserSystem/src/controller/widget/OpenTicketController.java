@@ -45,6 +45,8 @@ public class OpenTicketController implements Initializable {
     @FXML
     private Label lblTicketsOpen;
     @FXML
+    private Label lblMessagesWaiting;
+    @FXML
     private ComboBox cbBuilding;
     @FXML
     private TextField txtRoomNum;
@@ -67,16 +69,20 @@ public class OpenTicketController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        Internal.intializeWidgetStatus();
+
+        lblTicketsOpen.setText(Main.activeTicketCount);
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
+        
         //Update Ticket List
         try {
             Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
         } catch (IOException ex) {
             Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Update GUI Ticket Count
-        lblTicketsOpen.setText(Main.activeTicketCount);
-        //Update status light
-        statusLight.setFill(Internal.updateStatusLight());
         
         cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
         

@@ -68,9 +68,15 @@ public class ViewTicketHistoryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        Internal.intializeWidgetStatus();
+
         lblTicketsOpen.setText(Main.activeTicketCount);
-        statusLight.setFill(Internal.updateStatusLight());
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
+        
         try {
             listOfNotes=(communicate.getAllCurrentTicketNotes(Main.ticket.getTicketID()));
             for(int i=0; i<listOfNotes.size();i++){
@@ -82,6 +88,7 @@ public class ViewTicketHistoryController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ViewTicketHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }    
 
 

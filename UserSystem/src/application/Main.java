@@ -10,23 +10,29 @@ import javafx.scene.Scene; // Scene class.
 import javafx.stage.StageStyle;//StageStyle class.
 import javafx.scene.input.MouseEvent;// MouseEvent class.
 import javafx.event.EventHandler;// EventHandler class.
+import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.GREEN;
 
 // Edited By: Mohamed Mohamed
 
 public class Main extends Application { // Main class extends Application
     // Variables
     public static user currentUser;
-    public static ArrayList<Ticket> ticketList;
-    public static ArrayList<Ticket> unassignedTicketList;
-    public static String activeTicketCount="0";
-    public static String unassignedTicketCount="0";
-    public static String unreadMessageCount="0";
     public static String ticketID=null;
     public static Ticket ticket=null;
-        
     public static double xOffset;
     public static double yOffset;
-
+    
+    public static String activeTicketCount="0";
+    public static ArrayList<Ticket> ticketList;
+    
+    public static String unassignedTicketCount="0";
+    public static ArrayList<Ticket> unassignedTicketList;
+        
+    public static String unreadMessageCount="0";
+    public static ArrayList<String> unreadTicketIDList;
+    public static Color statusLightColor=GREEN;
+    
      //start method
     
     @Override

@@ -61,13 +61,18 @@ public class ReplyToTicketController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        Internal.intializeWidgetStatus();
+
+        lblTicketsOpen.setText(Main.activeTicketCount);
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
+        
         lblTicketsOpen.setText(Main.activeTicketCount);
         lblTicketTitle.setText("Ticket Title: "+Main.ticket.getTicketTitle());
         lblNoteOwner.setText("Ticket Comment: "+Main.currentUser.getfName()+" "+Main.currentUser.getlName());
-        
-        //Update status light
-        statusLight.setFill(Internal.updateStatusLight());
         
     }    
 

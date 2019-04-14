@@ -43,6 +43,8 @@ public class ViewTicketCommentController implements Initializable {
     @FXML
     private Label lblTicketsOpen;
     @FXML
+    private Label lblMessagesWaiting;
+    @FXML
     private TextArea txtNote;
     @FXML
     private Label lblCommentDateTime;
@@ -59,9 +61,14 @@ public class ViewTicketCommentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        Internal.intializeWidgetStatus();
+
         lblTicketsOpen.setText(Main.activeTicketCount);
-        statusLight.setFill(Internal.updateStatusLight());
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
         try {
             currentNote=communicate.getCurrentTicketNote(ticketID);
             

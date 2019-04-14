@@ -58,18 +58,17 @@ public class WidgetExpandedController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //Update Ticket List
-        try {
-            Main.ticketList = communicate.updateAllActiveUserTickets(Main.currentUser.uName);
-        } catch (IOException ex) {
-            Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //Update GUI count
-        lblTicketsOpen.setText(Main.activeTicketCount);
-        //Update status light
-        statusLight.setFill(Internal.updateStatusLight());
-        
-    }    
+            Internal.intializeWidgetStatus();
+            
+            //Update GUI count
+            lblTicketsOpen.setText(Main.activeTicketCount);
+            lblMessagesWaiting.setText(Main.unreadMessageCount);
+            
+            //Update status light
+            statusLight.setFill(Main.statusLightColor);
+
+         
+    }
 
     @FXML
     private void gotoViewTickets(MouseEvent event) throws IOException {
