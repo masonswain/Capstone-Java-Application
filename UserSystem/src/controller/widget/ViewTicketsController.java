@@ -88,7 +88,7 @@ public class ViewTicketsController implements Initializable {
                 notification = "";
                 endNotification="";
             }    
-        listItems.add(notification+Main.ticketList.get(i).getTicketTitle()+"  \nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+endNotification);
+        listItems.add(notification+"Issue: "+Main.ticketList.get(i).getTicketTitle()+"  \nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"  \nTechnician: "+Main.ticketList.get(i).getTechUN()+endNotification);
         }
         
         //Add observable list to listview

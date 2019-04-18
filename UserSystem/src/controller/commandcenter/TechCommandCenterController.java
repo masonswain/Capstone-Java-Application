@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -53,6 +54,7 @@ public class TechCommandCenterController implements Initializable {
     
     final ObservableList<String> unassignedListItems = FXCollections.observableArrayList();
     final ObservableList<String> assignedListItems = FXCollections.observableArrayList();
+    boolean timerStop=false;
     
     /**
      * Initializes the controller class.
@@ -60,6 +62,36 @@ public class TechCommandCenterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        //Update all dynamic elements in scene
+        updateStatus();
+        
+        //Create a runnable that is capable of updating JavaFX elements
+        Runnable updater = new Runnable(){
+            @Override
+            public void run() {
+                updateStatus();
+            }
+        
+        };
+    
+        //Create a thread to loop until the timerStop is set to true
+        new Thread(()->{
+        int i=0;
+                while(!timerStop){
+                try{
+                    Thread.sleep(Main.refreshTimer);
+                    
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+                i++;
+                System.out.println("Updating Status...");
+                Platform.runLater(updater);
+                }
+        }).start();
+        
+        
+/*
         //Update Ticket List and unread message counter
         if(Main.currentUser!=null) {
             try {
@@ -77,39 +109,13 @@ public class TechCommandCenterController implements Initializable {
         
         //Update status light
         statusLight.setFill(Internal.updateStatusLight());
-        
-        /////////  UNASSIGNED TICKETS LIST  ///////////
-        //Add strings to observable list
-        for(int i=0; i<Integer.parseInt(Main.unassignedTicketCount);i++){
-            unassignedListItems.add("Subject: "+Main.unassignedTicketList.get(i).getTicketTitle()+"\nCreated: "+Main.unassignedTicketList.get(i).getDateTimeCreated()+"\nUser: "+Main.unassignedTicketList.get(i).getUserUN());
-        }
-        
-        //Add observable list to listview
-        lvUnassignedTicketList.setItems(unassignedListItems);
+
+*/
         
         
-        /////////  ASSIGNED TICKETS LIST   ////////////
-        //Add strings to observable list
-        String notification="";
-        String endNotification="";
-        for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
-            //System.out.println("Unread Ticket List index 0: "+Main.unreadTicketIDList.get(0));
-            //System.out.println(Main.ticketList.get(i).getTicketID());
-            if(Main.unreadTicketIDList.contains(Main.ticketList.get(i).getTicketID())){
-                notification =    "===== UNREAD MESSAGE(S) WAITING =====\n";
-                endNotification="\n===============================";
-            }else{
-                notification = "";
-                endNotification="";
-            }
-            assignedListItems.add(notification+"Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN()+endNotification);
-        }
-        
-        //Add observable list to listview
-        lvAssignedTicketList.setItems(assignedListItems);
            
     }
-    
+    /*
     @FXML
     private void refreshTechCommandCenter(MouseEvent event) throws IOException{
                
@@ -148,6 +154,7 @@ public class TechCommandCenterController implements Initializable {
     public void refresh(MouseEvent event) throws IOException{
     refreshTechCommandCenter(event);
     }
+*/
 
     @FXML
     private void gotoTechCommandCenterMinimized(MouseEvent event) throws IOException {
@@ -181,7 +188,7 @@ public class TechCommandCenterController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+            timerStop=true;
             window.setScene(scene);
             window.show();
     }
@@ -189,6 +196,7 @@ public class TechCommandCenterController implements Initializable {
     @FXML
     private void closeCommandCenter(){
         //Exit Program
+        timerStop=true;
         System.exit(0);
     }
     
@@ -228,6 +236,7 @@ public class TechCommandCenterController implements Initializable {
         
         
         //Set Scene and Show
+        timerStop=true;
         window.setScene(scene);
         window.show();
     
@@ -269,11 +278,12 @@ public class TechCommandCenterController implements Initializable {
         
         
         //Set Scene and Show
+        timerStop=true;
         window.setScene(scene);
         window.show();
     
     }
-    
+    //assign button under unassigned ticket list
     @FXML
     private void assignTicketForm(MouseEvent event) throws IOException{
         
@@ -290,7 +300,7 @@ public class TechCommandCenterController implements Initializable {
         window.show();
     
     }
-    
+    //reassign button under assigned ticket list
     @FXML
     private void reassignTicketForm(MouseEvent event) throws IOException{
         
@@ -320,7 +330,8 @@ public class TechCommandCenterController implements Initializable {
         communicate.updateMainUnassignedTicketsList();
         
         //refreshTechCommandCenterDetails(event);
-        refreshTechCommandCenter(event);
+        //refreshTechCommandCenter(event);
+        updateStatus();
         
     }
     
@@ -335,7 +346,8 @@ public class TechCommandCenterController implements Initializable {
         communicate.assignTicket(Main.currentUser.getuName(), TechCommandCenterDetailsController.selectedTicket.getTicketID());
         
         //refreshTechCommandCenter(event);
-        refreshTechCommandCenter(event);
+        //refreshTechCommandCenter(event);
+        updateStatus();
         
     }
     
@@ -362,6 +374,66 @@ public class TechCommandCenterController implements Initializable {
         window.setScene(scene);
         window.show();
     
+    }
+    
+    
+    
+    private void updateStatus(){
+     
+        int assignedSelected=lvAssignedTicketList.getSelectionModel().getSelectedIndex();
+        int unassignedSelected=lvUnassignedTicketList.getSelectionModel().getSelectedIndex();
+        
+        assignedListItems.clear();
+        unassignedListItems.clear();
+        
+        //Update Ticket List and unread message counter
+        if(Main.currentUser!=null) {
+            try {
+                Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
+                communicate.updateMainUnassignedTicketsList();
+                communicate.updateUnreadMessages(Main.currentUser.getuName());
+            } catch (IOException ex) {
+                Logger.getLogger(TechCommandCenterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //Update Ticket & Note Counters
+        lblTicketsAvailable.setText(Main.unassignedTicketCount);        
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Internal.updateStatusLight());
+        
+        /////////  UNASSIGNED TICKETS LIST  ///////////
+        //Add strings to observable list
+        for(int i=0; i<Integer.parseInt(Main.unassignedTicketCount);i++){
+            unassignedListItems.add("Subject: "+Main.unassignedTicketList.get(i).getTicketTitle()+"\nCreated: "+Main.unassignedTicketList.get(i).getDateTimeCreated()+"\nUser: "+Main.unassignedTicketList.get(i).getUserUN());
+        }
+        
+        //Add observable list to listview
+        lvUnassignedTicketList.setItems(unassignedListItems);
+        lvUnassignedTicketList.getSelectionModel().select(unassignedSelected);
+        
+        
+        /////////  ASSIGNED TICKETS LIST   ////////////
+        //Add strings to observable list
+        String notification="";
+        String endNotification="";
+        for(int i=0; i<Integer.parseInt(Main.activeTicketCount);i++){
+            //System.out.println("Unread Ticket List index 0: "+Main.unreadTicketIDList.get(0));
+            //System.out.println(Main.ticketList.get(i).getTicketID());
+            if(Main.unreadTicketIDList.contains(Main.ticketList.get(i).getTicketID())){
+                notification =    "===== UNREAD MESSAGE(S) WAITING =====\n";
+                endNotification="\n===============================";
+            }else{
+                notification = "";
+                endNotification="";
+            }
+            assignedListItems.add(notification+"Subject: "+Main.ticketList.get(i).getTicketTitle()+"\nCreated: "+Main.ticketList.get(i).getDateTimeCreated()+"\nUser: "+Main.ticketList.get(i).getUserUN()+endNotification);
+        }
+        
+        //Add observable list to listview
+        lvAssignedTicketList.setItems(assignedListItems);
+        lvAssignedTicketList.getSelectionModel().select(assignedSelected);
     }
     
     
