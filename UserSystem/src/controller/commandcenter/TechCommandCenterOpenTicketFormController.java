@@ -5,10 +5,15 @@
  */
 package controller.commandcenter;
 
+import application.Main;
 import application.communicate;
+import application.user;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -40,13 +45,40 @@ public class TechCommandCenterOpenTicketFormController implements Initializable 
     private Button btnCancel;
     @FXML
     private ComboBox cbBuilding;
+    @FXML
+    private ComboBox cbEndUser;
+    
+    ArrayList<user> listOfUsers= new ArrayList();
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        //listOfUsers.add(Main.currentUser);
+       //listOfUsers.get(0).setuName();
+        //listOfUsers.get(0).setfName("Unassigned");
+        //listOfUsers.get(0).setlName("");
+        int select=0;
+        try {
+            listOfUsers.addAll(communicate.getListOfAllUsers());
+            for(int i=0; i<listOfUsers.size();i++){
+                
+                if(listOfUsers.get(i).uName.equals(Main.currentUser.uName)){
+                   select=i;
+                   System.out.println("Selct Index: "+select);
+                }
+                cbEndUser.getItems().add(listOfUsers.get(i).getfName()+" "+listOfUsers.get(i).getlName());
+                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(TechCommandCenterAssignTicketFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        cbEndUser.getSelectionModel().select(select);
+        //System.out.println("Selct Index: "+select);
         cbBuilding.getItems().addAll("CLC","District Office","Kaposia","Lincoln Center","Secondary");
         cbBuilding.getSelectionModel().select(0);
     }    
@@ -54,8 +86,7 @@ public class TechCommandCenterOpenTicketFormController implements Initializable 
     @FXML
     private void submit(MouseEvent event) throws IOException{
     
-        //System.out.println(cbAdmin.getSelectionModel().getSelectedItem().toString());
-        if(communicate.createTicket(cbBuilding.getSelectionModel().getSelectedItem().toString(), txtRoomNum.getText(), txtPhone.getText(), txtProblemDescription.getText(), txtProblemSubject.getText())){
+        if(communicate.createTicketForUser(cbBuilding.getSelectionModel().getSelectedItem().toString(), txtRoomNum.getText(), txtPhone.getText(), txtProblemDescription.getText(), txtProblemSubject.getText(), listOfUsers.get(cbEndUser.getSelectionModel().getSelectedIndex()).uName)){
         System.out.println("Ticket Created Successfully");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();

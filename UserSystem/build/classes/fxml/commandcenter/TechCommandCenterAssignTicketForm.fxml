@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commandcenter.TechCommandCenterAssignTicketFormController">
    <children>
       <ComboBox fx:id="cbAssignTo" layoutX="9.0" layoutY="57.0" prefHeight="25.0" prefWidth="280.0" />
-      <TextArea fx:id="txtProblemDescription" layoutX="8.0" layoutY="119.0" prefHeight="238.0" prefWidth="280.0" promptText="Please describe your problem in more detail here." wrapText="true" />
+      <TextArea fx:id="txtAssignTicketNote" layoutX="8.0" layoutY="119.0" prefHeight="238.0" prefWidth="280.0" promptText="Please describe your problem in more detail here." wrapText="true" />
       <Label layoutX="10.0" layoutY="102.0" prefHeight="17.0" prefWidth="143.0" text="Add a note(optional)" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />

@@ -306,6 +306,104 @@ public class communicate {
         return adminList;
     }
     
+    public static ArrayList<user> getListOfAllUsers() throws IOException{
+    
+        ArrayList<user> userList = new ArrayList();
+        
+        String inputFromURL = null;
+        String fName;
+        String lName;
+        String uName;
+        int adminCount=0;
+        int fromIndex=0;
+            
+        int startSub=0;
+        int endSub=0;
+            
+        user user = new user();
+            
+        String url = "http://csc450.joelknutson.net/java/return-all-users.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        //wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+            
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+            
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+        }
+        
+        in.close();
+            
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
+            
+        String serverResponse=response.toString();
+
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+
+        if(!serverResponse.contains("No User Found")){
+    
+            while((fromIndex = serverResponse.indexOf("fName: ", fromIndex))!= -1){
+            adminCount++;
+            fromIndex++;
+            }
+            
+            //Create and add Tickets list            
+            for(int i=0; i < adminCount; i++){
+            //Find fName information
+            startSub = serverResponse.indexOf("fName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            fName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("First Name: "+fName);
+
+            //Find lName information
+            startSub = serverResponse.indexOf("lName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            lName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Last Name: "+lName);
+
+            //Find isAdmin information
+            startSub = serverResponse.indexOf("uName: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            uName = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            System.out.println("Username: "+uName);
+
+            //update user object
+            user.fName = fName;
+            user.lName = lName;
+            user.uName = uName;
+            user.isAdmin = uName.equalsIgnoreCase("Y");
+            user.authenticated = (fName!=null);
+
+            userList.add(new user(fName, lName, uName, true, false));
+            //adminList.add(user);
+            //Debugging Line - output object variables to prove object creation and variable assignment
+            //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
+            }
+        }else{
+           System.out.println("No User Found");
+        }
+        
+        return userList;
+    }
+    
     public static boolean createNewUser(String fName, String lName, String uName,String authPW, String isAdmin) throws IOException{
     
         boolean result = false;
@@ -751,6 +849,61 @@ public class communicate {
         String inputFromURL = null;
         String userUN = Main.currentUser.getuName();
             
+            
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/create-ticket.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "ticketTitle="+subject+"&techUN=unassigned"+"&userUN="+userUN+"&status=Active"+"&building="+building+"&room="+room+"&phone="+phone+"&description="+description;
+           
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+            
+        int responseCode = conn.getResponseCode();
+	System.out.println("\nSending 'POST' request to URL : " + url);
+	System.out.println("Post parameters : " + urlParameters);
+	System.out.println("Response Code : " + responseCode);
+            
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+        }
+        
+        in.close();   
+            
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
+          
+        int success=response.toString().indexOf("New record created successfully");
+          
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+        if(success>-1){
+            //System.out.println("Ticket Created");
+            result=true;
+        }
+        else{
+            //System.out.println("Request Failed");
+        }
+        
+        return result;
+    }
+    
+    //Uses server file "create-ticket.php"
+    public static boolean createTicketForUser(String building, String room, String phone, String description, String subject, String endUser) throws IOException{
+    
+        boolean result = false;
+        String inputFromURL = null;
+        String userUN = endUser;
             
         //Reference to Sending GET Request and returning data
         //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/

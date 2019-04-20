@@ -45,6 +45,8 @@ public class TechCommandCenterAssignTicketFormController implements Initializabl
     private Button btnSubmit;
     @FXML
     private Button btnCancel;
+    @FXML
+    private TextArea txtAssignTicketNote;
     
     ArrayList<user> listOfAdmins= new ArrayList();
 
@@ -73,6 +75,10 @@ public class TechCommandCenterAssignTicketFormController implements Initializabl
 
     @FXML
     private void submit(MouseEvent event) throws IOException {
+        
+        if(!txtAssignTicketNote.getText().isEmpty()){
+        communicate.createTicketNote(TechCommandCenterDetailsController.selectedTicket.getTicketID(), Main.currentUser.getuName(), txtAssignTicketNote.getText());
+        }
         //System.out.println(cbAdmin.getSelectionModel().getSelectedItem().toString());
         if(communicate.assignTicket(listOfAdmins.get(cbAssignTo.getSelectionModel().getSelectedIndex()).getuName(), TechCommandCenterDetailsController.selectedTicket.getTicketID())){
             System.out.println("Ticket assigned successfully");
