@@ -1039,6 +1039,140 @@ public class communicate {
         return true;
     }
     
+    public static ArrayList<Ticket> searchTickets(String techUN, String userUN, String fromDate, String toDate)throws IOException{
+    
+        /////////////    VARIABLES    /////////////////
+        ArrayList<Ticket> ticketList = new ArrayList();
+        String inputFromURL = null;
+        String serverResponse;
+        int ticketCount=0;
+        int fromIndex=0;
+        
+        
+        
+        //////////////    HTTP COMMUNICATION    ////////////////////
+            String url = "http://csc450.joelknutson.net/java/return-search-tickets.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters= "techUN="+techUN+"&userUN="+userUN+"&fromDate="+fromDate+"&toDate="+toDate;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            
+            //Debugging Log Info
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+serverResponse);
+            
+            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
+            
+            //Count the number of tickets
+            while((fromIndex = serverResponse.indexOf("Ticket ID: ", fromIndex))!= -1){
+            ticketCount++;
+            fromIndex++;
+            }
+            
+            //Create and add Tickets list            
+            for(int i=0, startSub=0, endSub=0; i < ticketCount; i++){
+                //Find ticketID information
+                startSub = serverResponse.indexOf("Ticket ID: ",startSub)+11;
+                endSub = serverResponse.indexOf("<br/>",startSub);
+                String ticketID = serverResponse.substring(startSub,endSub);
+                //Debug Line
+                //System.out.println("Ticket ID: "+ticketID);
+                
+                //Find ticketTitle information
+                startSub = serverResponse.indexOf("Title: ",startSub)+7;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String ticketTitle = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Ticket Title: "+ticketTitle);
+                
+                //Find ticketTitle information
+                startSub = serverResponse.indexOf("Status: ",startSub)+8;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String status = serverResponse.substring(startSub, endSub);
+                
+                 //Find endUser information
+                startSub = serverResponse.indexOf("End User: ",startSub)+10;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String ticketUserUN = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("End User: "+userUN);
+                
+                //Find technicianUser information
+                startSub = serverResponse.indexOf("Tech: ",startSub)+6;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String technicianUN = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Tech User: "+technicianUN);
+                
+                //Find building information
+                startSub = serverResponse.indexOf("Building: ",startSub)+10;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String building = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Building: "+building);
+                
+                //Find room information
+                startSub = serverResponse.indexOf("Room: ",startSub)+6;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String room = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Room: "+room);
+                
+                //Find phone information
+                startSub = serverResponse.indexOf("Phone: ",startSub)+7;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String phone = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Phone: "+phone);
+                
+                //Find DATETIME_CREATED information
+                startSub = serverResponse.indexOf("DATETIME_CREATED: ",startSub)+18;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String dateTimeCreated = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Created: "+dateTimeCreated);
+                
+                //Find DATETIME_SOLVED information
+                startSub = serverResponse.indexOf("DATETIME_SOLVED: ",startSub)+17;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                String dateTimeSolved = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Solved: "+dateTimeSolved);
+                
+                
+                ticketList.add(new Ticket(ticketID,ticketTitle, technicianUN, ticketUserUN, status, building, room, phone, dateTimeCreated));
+                
+            }
+            //Debug Line
+            //System.out.println("Ticket Count: "+ticketCount);
+            Main.activeTicketCount=Integer.toString(ticketCount);
+            Main.ticketList=ticketList;
+            
+        
+        return ticketList;
+        
+    }
+    
     
     //////  NOTE  //////
     // Returns all the active list of Tickets associated with a tech username

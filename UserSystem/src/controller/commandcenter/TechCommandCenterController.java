@@ -89,73 +89,9 @@ public class TechCommandCenterController implements Initializable {
                 Platform.runLater(updater);
                 }
         }).start();
-        
-        
-/*
-        //Update Ticket List and unread message counter
-        if(Main.currentUser!=null) {
-            try {
-                Main.ticketList = communicate.updateAllActiveTechTickets(Main.currentUser.uName);
-                communicate.updateMainUnassignedTicketsList();
-                communicate.updateUnreadMessages(Main.currentUser.getuName());
-            } catch (IOException ex) {
-                Logger.getLogger(TechCommandCenterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        //Update Ticket & Note Counters
-        lblTicketsAvailable.setText(Main.unassignedTicketCount);        
-        lblMessagesWaiting.setText(Main.unreadMessageCount);
-        
-        //Update status light
-        statusLight.setFill(Internal.updateStatusLight());
-
-*/
-        
-        
-           
-    }
-    /*
-    @FXML
-    private void refreshTechCommandCenter(MouseEvent event) throws IOException{
-               
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenter.fxml")); 
-        Scene scene = new Scene(root);
-	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        
-        /////////  Allow undecorated window be dragged     ////////////// 
-    
-            root.setOnMousePressed(new EventHandler<MouseEvent>() {       	
-                @Override
-                public void handle(MouseEvent event) {
-                   xOffset = event.getSceneX();
-                   yOffset = event.getSceneY();
-                } 
-            });
-        
-            // User Screen is able to moved by Mouse.
-            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                   window.setX(event.getScreenX() - xOffset);
-                   window.setY(event.getScreenY() - yOffset);
-                }
-            });
-        
-        ////////////////////        END      //////////////////////////// 
-        
-        
-        //Set Scene and Show
-        window.setScene(scene);
-        window.show();
+          
     }
     
-    public void refresh(MouseEvent event) throws IOException{
-    refreshTechCommandCenter(event);
-    }
-*/
-
     @FXML
     private void gotoTechCommandCenterMinimized(MouseEvent event) throws IOException {
         
@@ -376,7 +312,17 @@ public class TechCommandCenterController implements Initializable {
     
     }
     
+    @FXML
+    private void ticketSearchForm(MouseEvent event) throws IOException{
     
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterTicketSearchForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+        
+    }
     
     private void updateStatus(){
      
@@ -435,7 +381,5 @@ public class TechCommandCenterController implements Initializable {
         lvAssignedTicketList.setItems(assignedListItems);
         lvAssignedTicketList.getSelectionModel().select(assignedSelected);
     }
-    
-    
     
 }

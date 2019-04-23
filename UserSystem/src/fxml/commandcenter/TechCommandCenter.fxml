@@ -121,5 +121,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button id="Create User" fx:id="btnTicketSearch" layoutX="691.0" layoutY="231.0" mnemonicParsing="false" onMouseClicked="#ticketSearchForm" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Ticket Search" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
