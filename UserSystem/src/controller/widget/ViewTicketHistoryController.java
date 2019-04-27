@@ -78,7 +78,7 @@ public class ViewTicketHistoryController implements Initializable {
         statusLight.setFill(Main.statusLightColor);
         
         try {
-            listOfNotes=(communicate.getAllCurrentTicketNotes(Main.ticket.getTicketID()));
+            listOfNotes=(communicate.getAllCurrentTicketNotesNewestToOldest(Main.ticket.getTicketID()));
             for(int i=0; i<listOfNotes.size();i++){
             txtTicketHistory.appendText(listOfNotes.get(i).getNote_ID()+" - "+listOfNotes.get(i).getOwner_UN()+"\n"+listOfNotes.get(i).getNote()+"\n\n");
             }

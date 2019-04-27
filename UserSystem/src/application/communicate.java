@@ -55,9 +55,9 @@ public class communicate {
             wr.close();
             
             int responseCode = conn.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -67,7 +67,7 @@ public class communicate {
             in.close();
             
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+response.toString());
+            //System.out.println("Server Response: "+response.toString());
             
             String serverResponse=response.toString();
 
@@ -82,21 +82,21 @@ public class communicate {
             endSub = serverResponse.indexOf("<br/>",startSub);
             fName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("First Name: "+fName);
+            //System.out.println("First Name: "+fName);
             
             //Find lName information
             startSub = serverResponse.indexOf("lName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             lName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Last Name: "+lName);
+            //System.out.println("Last Name: "+lName);
             
             //Find isAdmin information
             startSub = serverResponse.indexOf("isAdmin: ",startSub)+9;
             endSub = serverResponse.indexOf("<br/>",startSub);
             isAdmin = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Admin: "+isAdmin);
+            //System.out.println("Admin: "+isAdmin);
             
             //update user object
             loggedInUser.fName = fName;
@@ -147,9 +147,9 @@ public class communicate {
         wr.close();
             
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
             
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -160,7 +160,7 @@ public class communicate {
         in.close();
             
         //Debugging Line - server response text (this is the string that is parsed
-        System.out.println("Server Response: "+response.toString());
+        //System.out.println("Server Response: "+response.toString());
             
         String serverResponse=response.toString();
 
@@ -175,21 +175,21 @@ public class communicate {
             endSub = serverResponse.indexOf("<br/>",startSub);
             fName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("First Name: "+fName);
+            //System.out.println("First Name: "+fName);
 
             //Find lName information
             startSub = serverResponse.indexOf("lName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             lName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Last Name: "+lName);
+            //System.out.println("Last Name: "+lName);
 
             //Find isAdmin information
             startSub = serverResponse.indexOf("isAdmin: ",startSub)+9;
             endSub = serverResponse.indexOf("<br/>",startSub);
             isAdmin = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Admin: "+isAdmin);
+            //System.out.println("Admin: "+isAdmin);
 
             //update user object
             user.fName = fName;
@@ -237,9 +237,9 @@ public class communicate {
         wr.close();
             
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
 	//System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("Response Code : " + responseCode);
             
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -250,7 +250,7 @@ public class communicate {
         in.close();
             
         //Debugging Line - server response text (this is the string that is parsed
-        System.out.println("Server Response: "+response.toString());
+        //System.out.println("Server Response: "+response.toString());
             
         String serverResponse=response.toString();
 
@@ -271,21 +271,21 @@ public class communicate {
             endSub = serverResponse.indexOf("<br/>",startSub);
             fName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("First Name: "+fName);
+            //System.out.println("First Name: "+fName);
 
             //Find lName information
             startSub = serverResponse.indexOf("lName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             lName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Last Name: "+lName);
+            //System.out.println("Last Name: "+lName);
 
             //Find isAdmin information
             startSub = serverResponse.indexOf("uName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             uName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Username: "+uName);
+            //System.out.println("Username: "+uName);
 
             //update user object
             user.fName = fName;
@@ -335,9 +335,9 @@ public class communicate {
         wr.close();
             
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
 	//System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("Response Code : " + responseCode);
             
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -348,7 +348,7 @@ public class communicate {
         in.close();
             
         //Debugging Line - server response text (this is the string that is parsed
-        System.out.println("Server Response: "+response.toString());
+        //System.out.println("Server Response: "+response.toString());
             
         String serverResponse=response.toString();
 
@@ -369,21 +369,21 @@ public class communicate {
             endSub = serverResponse.indexOf("<br/>",startSub);
             fName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("First Name: "+fName);
+            //System.out.println("First Name: "+fName);
 
             //Find lName information
             startSub = serverResponse.indexOf("lName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             lName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Last Name: "+lName);
+            //System.out.println("Last Name: "+lName);
 
             //Find isAdmin information
             startSub = serverResponse.indexOf("uName: ",startSub)+7;
             endSub = serverResponse.indexOf("<br/>",startSub);
             uName = serverResponse.substring(startSub,endSub);
             //Debug Line
-            System.out.println("Username: "+uName);
+            //System.out.println("Username: "+uName);
 
             //update user object
             user.fName = fName;
@@ -428,9 +428,9 @@ public class communicate {
             wr.close();
             
             int responseCode = conn.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -440,7 +440,7 @@ public class communicate {
             in.close();
             
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+response.toString());
+            //System.out.println("Server Response: "+response.toString());
             
             int success=response.toString().indexOf("New user: "+fName+" "+lName+" created successfully");
             
@@ -452,7 +452,6 @@ public class communicate {
         
         return result;
     }
-    
     
     /////  TICKET  /////
     // Returns all the active list of Tickets associated with a tech username
@@ -485,9 +484,9 @@ public class communicate {
             int responseCode = conn.getResponseCode();
             
             //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -497,7 +496,7 @@ public class communicate {
             in.close();
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
+            //System.out.println("Server Response: "+serverResponse);
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
             
@@ -614,9 +613,9 @@ public class communicate {
             int responseCode = conn.getResponseCode();
             
             //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -626,7 +625,7 @@ public class communicate {
             in.close();
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
+            //System.out.println("Server Response: "+serverResponse);
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
             
@@ -744,9 +743,9 @@ public class communicate {
             int responseCode = conn.getResponseCode();
             
             //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -756,7 +755,7 @@ public class communicate {
             in.close();
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
+            //System.out.println("Server Response: "+serverResponse);
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
             
@@ -868,9 +867,9 @@ public class communicate {
         wr.close();
             
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
             
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -881,7 +880,7 @@ public class communicate {
         in.close();   
             
         //Debugging Line - server response text (this is the string that is parsed
-        System.out.println("Server Response: "+response.toString());
+        //System.out.println("Server Response: "+response.toString());
           
         int success=response.toString().indexOf("New record created successfully");
           
@@ -923,9 +922,9 @@ public class communicate {
         wr.close();
             
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
             
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -936,7 +935,7 @@ public class communicate {
         in.close();   
             
         //Debugging Line - server response text (this is the string that is parsed
-        System.out.println("Server Response: "+response.toString());
+        //System.out.println("Server Response: "+response.toString());
           
         int success=response.toString().indexOf("New record created successfully");
           
@@ -959,8 +958,8 @@ public class communicate {
         String inputFromURL = null;
         String serverResponse;
         //UPDATE `TICKET` SET `TECH_UN`="jknutson" WHERE TICKET_ID=49
-        System.out.println("techUN: "+techUN);
-        System.out.println("ticketID: "+ticketID);
+        //System.out.println("techUN: "+techUN);
+        //System.out.println("ticketID: "+ticketID);
         //Reference to Sending GET Request and returning data
         //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
         //Example GET/POST Request URL
@@ -971,6 +970,48 @@ public class communicate {
         conn.setRequestMethod("POST");
            
         String urlParameters= "techUN="+techUN+"&ticketID="+ticketID;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+          
+        int responseCode = conn.getResponseCode();
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            //System.out.println("Server Response: "+serverResponse);
+    
+        return true;
+    }
+ 
+    public static boolean closeTicket(Ticket ticket) throws IOException{
+    
+        String inputFromURL = null;
+        String serverResponse;
+        //UPDATE TICKET SET TECH_UN='jknutson', STATUS='closed' WHERE TICKET_ID=57
+        //System.out.println("techUN: "+ticket.getTechUN());
+        //System.out.println("ticketID: "+ticket.getTicketID());
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/close-ticket.php";
+           
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "techUN="+ticket.getTechUN()+"&ticketID="+ticket.getTicketID();
             
         conn.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -993,26 +1034,32 @@ public class communicate {
             //Debugging Line - server response text (this is the string that is parsed
             System.out.println("Server Response: "+serverResponse);
     
+        
         return true;
     }
- 
-    public static boolean closeTicket(Ticket ticket) throws IOException{
     
+    public static boolean openCloseTicketByID(Ticket ticket, Boolean active) throws IOException{
+    
+        
         String inputFromURL = null;
         String serverResponse;
+        
+        String status="Closed";
+        if(active){status="Active";}
+        
         //UPDATE TICKET SET TECH_UN='jknutson', STATUS='closed' WHERE TICKET_ID=57
-        System.out.println("techUN: "+ticket.getTechUN());
-        System.out.println("ticketID: "+ticket.getTicketID());
+        //System.out.println("techUN: "+ticket.getTechUN());
+        //System.out.println("ticketID: "+ticket.getTicketID());
         //Reference to Sending GET Request and returning data
         //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
         //Example GET/POST Request URL
-        String url = "http://csc450.joelknutson.net/java/close-ticket.php";
+        String url = "http://csc450.joelknutson.net/java/open-close-ticket-by-id.php";
            
         URL obj = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
         conn.setRequestMethod("POST");
            
-        String urlParameters= "techUN="+ticket.getTechUN()+"&ticketID="+ticket.getTicketID();
+        String urlParameters= "status="+status+"&ticketID="+ticket.getTicketID();
             
         conn.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -1253,7 +1300,7 @@ public class communicate {
     }
  
     //Returns an array of notes ** OLD VERSION AT BOTTOM **
-    public static ArrayList<Note> getAllCurrentTicketNotes(String ticket_ID) throws IOException {	
+    public static ArrayList<Note> getAllCurrentTicketNotesNewestToOldest(String ticket_ID) throws IOException {	
         
         /////////////    VARIABLES    /////////////////
         ArrayList<Note> ticketNoteList = new ArrayList();
@@ -1286,9 +1333,9 @@ public class communicate {
             int responseCode = conn.getResponseCode();
             
             //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -1298,7 +1345,7 @@ public class communicate {
             in.close();
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
+            //System.out.println("Server Response: "+serverResponse);
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
             
@@ -1308,7 +1355,7 @@ public class communicate {
             fromIndex=fromIndex+7;
             }
             
-            System.out.println("Note Count: "+noteCount);
+            //System.out.println("Note Count: "+noteCount);
             
             //Create and add notes to list            
             for(int i=0, startSub=0, endSub=0; i < noteCount; i++){
@@ -1317,21 +1364,21 @@ public class communicate {
                 endSub = serverResponse.indexOf("<br/>",startSub);
                 owner_UN = serverResponse.substring(startSub,endSub);
                 //Debug Line
-                System.out.println("OWNER: "+owner_UN);
+                //System.out.println("OWNER: "+owner_UN);
                 
                 //Find ticketTitle information
                 startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+9;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 note_ID = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("Ticket Title: "+note_ID);
+                //System.out.println("Ticket Title: "+note_ID);
                 
                  //Find endUser information
                 startSub = serverResponse.indexOf("NOTE: ",startSub)+6;
                 endSub = serverResponse.indexOf("<br/>", startSub);
                 note = serverResponse.substring(startSub, endSub);
                 //Debug Line
-                System.out.println("End User: "+note);
+                //System.out.println("End User: "+note);
                 
                 ticketNoteList.add(new Note(note_ID,ticket_ID,owner_UN,note));
                                
@@ -1341,6 +1388,95 @@ public class communicate {
         return ticketNoteList;
     }
 
+    public static ArrayList<Note> getAllCurrentTicketNotesOldestToNewest(String ticket_ID) throws IOException {	
+        
+        /////////////    VARIABLES    /////////////////
+        ArrayList<Note> ticketNoteList = new ArrayList();
+        String inputFromURL = null;
+        String serverResponse;
+        int ticketCount=0;
+        int noteCount=0;
+        int fromIndex=0;
+        String owner_UN=null;
+        String note_ID=null;
+        String note=null;
+        
+        
+        
+        
+        //////////////    HTTP COMMUNICATION    ////////////////////
+            String url = "http://csc450.joelknutson.net/java/return-all-ticket-notes-asc.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+            String urlParameters= "ticketID="+ticket_ID;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            
+            //Debugging Log Info
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            serverResponse=response.toString();
+            //Debugging Line - server response text (this is the string that is parsed
+            //System.out.println("Server Response: "+serverResponse);
+            
+            ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
+            
+            //Count the number of notes            
+            while((fromIndex = serverResponse.indexOf("OWNER: ", fromIndex))!= -1){
+            noteCount++;
+            fromIndex=fromIndex+7;
+            }
+            
+            //System.out.println("Note Count: "+noteCount);
+            
+            //Create and add notes to list            
+            for(int i=0, startSub=0, endSub=0; i < noteCount; i++){
+                //Find ticketID information
+                startSub = serverResponse.indexOf("OWNER: ",startSub)+7;
+                endSub = serverResponse.indexOf("<br/>",startSub);
+                owner_UN = serverResponse.substring(startSub,endSub);
+                //Debug Line
+                //System.out.println("OWNER: "+owner_UN);
+                
+                //Find ticketTitle information
+                startSub = serverResponse.indexOf("NOTE_ID: ",startSub)+9;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                note_ID = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("Ticket Title: "+note_ID);
+                
+                 //Find endUser information
+                startSub = serverResponse.indexOf("NOTE: ",startSub)+6;
+                endSub = serverResponse.indexOf("<br/>", startSub);
+                note = serverResponse.substring(startSub, endSub);
+                //Debug Line
+                //System.out.println("End User: "+note);
+                
+                ticketNoteList.add(new Note(note_ID,ticket_ID,owner_UN,note));
+                               
+            }
+                 
+        
+        return ticketNoteList;
+    }
+
+    
     //Creates a Ticket Note in DB
     public static void createTicketNote(String ticketID, String ownerUN, String ticketNote) throws MalformedURLException, ProtocolException, IOException{
         
@@ -1361,9 +1497,9 @@ public class communicate {
         wr.close();
           
         int responseCode = conn.getResponseCode();
-	System.out.println("\nSending 'POST' request to URL : " + url);
-	System.out.println("Post parameters : " + urlParameters);
-	System.out.println("Response Code : " + responseCode);
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
                     
     }
     
@@ -1386,7 +1522,7 @@ public class communicate {
         }
         
         //Debug Line for String sent to PHP script
-        System.out.println(listOfTicketIDs);
+        //System.out.println(listOfTicketIDs);
         
         //////////////    HTTP COMMUNICATION    ////////////////////
             String url = "http://csc450.joelknutson.net/java/return-unread-ticket-notes.php";
@@ -1405,9 +1541,9 @@ public class communicate {
             int responseCode = conn.getResponseCode();
             
             //Debugging Log Info
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -1417,7 +1553,7 @@ public class communicate {
             in.close();
             serverResponse=response.toString();
             //Debugging Line - server response text (this is the string that is parsed
-            System.out.println("Server Response: "+serverResponse);
+            //System.out.println("Server Response: "+serverResponse);
             
             ///////////////////  PARSE SERVER RESPONSE    ///////////////////////
             

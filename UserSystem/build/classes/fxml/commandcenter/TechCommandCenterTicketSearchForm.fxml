@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commandcenter.TechCommandCenterTicketSearchFormController">
+<AnchorPane fx:id="apScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: MAROON;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.commandcenter.TechCommandCenterTicketSearchFormController">
    <children>
       <ComboBox fx:id="cbTech" layoutX="9.0" layoutY="45.0" prefHeight="25.0" prefWidth="280.0" />
       <Label layoutX="10.0" layoutY="174.0" prefHeight="17.0" prefWidth="143.0" text="Tickets" textFill="WHITE">
@@ -55,6 +55,6 @@
          </font>
       </Label>
       <DatePicker fx:id="dateTo" layoutX="167.0" layoutY="141.0" prefHeight="25.0" prefWidth="122.0" />
-      <ListView fx:id="lvTicketList" layoutX="8.0" layoutY="191.0" prefHeight="160.0" prefWidth="280.0" />
+      <ListView fx:id="lvTicketList" layoutX="8.0" layoutY="191.0" onMouseClicked="#gotoTicketDetails" prefHeight="160.0" prefWidth="280.0" />
    </children>
 </AnchorPane>

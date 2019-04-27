@@ -11,7 +11,7 @@ package application;
  */
 public class Ticket {
     
-    private String ticketID, ticketTitle, techUN,userUN, status, building, room, phone, dateTimeCreated;
+    private String ticketID, ticketTitle, techUN,userUN, status, building, room, phone, dateTimeCreated, dateTimeClosed;
     
     public Ticket(){
     

@@ -358,7 +358,7 @@ public class TechCommandCenterDetailsController implements Initializable {
             lblBuilding.setText("Building: "+selectedTicket.getBuilding());
             lblRoom.setText("Room:    "+selectedTicket.getRoom());
             lblSubject.setText("Subject: "+selectedTicket.getTicketTitle());
-            listOfNotes=communicate.getAllCurrentTicketNotes(selectedTicket.getTicketID());
+            listOfNotes=communicate.getAllCurrentTicketNotesNewestToOldest(selectedTicket.getTicketID());
             
             if(listOfNotes.size()>0){
                 for(int i=0; i<listOfNotes.size();i++){
@@ -378,15 +378,7 @@ public class TechCommandCenterDetailsController implements Initializable {
         //Add observable list to listview
         lvUnassignedTicketList.setItems(unassignedListItems);
         lvUnassignedTicketList.getSelectionModel().select(unassignedSelected);
-        
-        /*
-        //Add observable list to listview
-        lvUnassignedTicketList.setItems(unassignedListItems);
-        if(!isAssigned){
-            lvUnassignedTicketList.getSelectionModel().select(selectedIndex);
-        }
-*/
-        
+                
         /////////  ASSIGNED TICKETS LIST   ////////////
         //Add strings to observable list
         String notification="";
@@ -407,16 +399,7 @@ public class TechCommandCenterDetailsController implements Initializable {
         //Add observable list to listview
         lvAssignedTicketList.setItems(assignedListItems);
         lvAssignedTicketList.getSelectionModel().select(assignedSelected);
-        
-        /*
-        //Determine which list is being used and update selected list item
-        if(isAssigned){
-            lvAssignedTicketList.getSelectionModel().select(selectedIndex);
-        }else{
-            lvUnassignedTicketList.getSelectionModel().select(selectedIndex);
-        }
-*/
-        
+                
     }
     
 }

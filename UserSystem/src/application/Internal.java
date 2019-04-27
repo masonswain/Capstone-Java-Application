@@ -7,8 +7,13 @@ package application;
 
 import controller.widget.WidgetExpandedController;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
 /**
@@ -48,6 +53,28 @@ public class Internal {
             }
     }
     Main.statusLightColor=updateStatusLight();
+    }
+    
+    public static ObservableList<String> ticketArrayListToObservableList(ArrayList<Ticket> arrayList){
+    
+        ObservableList<String> listItems = FXCollections.observableArrayList();
+        
+        for(int i=0; i<arrayList.size();i++){
+            listItems.add("Subject: "+arrayList.get(i).getTicketTitle()+"\nCreated: "+arrayList.get(i).getDateTimeCreated()+"\nUser: "+arrayList.get(i).getUserUN()+"\nStatus: "+arrayList.get(i).getStatus());
+        }
+       
+        return listItems;
+    }
+    
+     public static String noteArrayListToTextAreaString(ArrayList<Note> arrayList){
+    
+        String taNotes="";
+        
+        for(int i=0; i<arrayList.size();i++){
+            taNotes+=(arrayList.get(i).getNote_ID()+" - "+arrayList.get(i).getOwner_UN()+"\n"+arrayList.get(i).getNote()+"\n\n");
+        }
+       
+        return taNotes;
     }
     
 }
