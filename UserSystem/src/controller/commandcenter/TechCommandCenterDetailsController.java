@@ -12,7 +12,6 @@ import static application.Main.yOffset;
 import application.Note;
 import application.Ticket;
 import application.communicate;
-import application.setWidgetPosition;
 import application.user;
 import java.io.IOException;
 import java.net.URL;
@@ -81,9 +80,6 @@ public class TechCommandCenterDetailsController implements Initializable {
     public static Ticket selectedTicket;
     boolean timerStop=false;
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Update all dynamic elements in scene

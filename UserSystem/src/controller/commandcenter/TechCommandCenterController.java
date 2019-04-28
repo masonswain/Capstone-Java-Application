@@ -12,7 +12,11 @@ import static application.Main.yOffset;
 import application.communicate;
 import application.setWidgetPosition;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -322,6 +326,34 @@ public class TechCommandCenterController implements Initializable {
         window.setScene(scene);
         window.show();
         
+    }
+    
+    @FXML
+    private void remoteConnect(MouseEvent event) throws IOException, InterruptedException{
+           
+        System.out.println(InetAddress.getLocalHost());
+        //Create Session ID
+        Random r = new Random();
+        String sessionID = Integer.toString(r.nextInt(999999999));
+        
+        //Check if entry exists and delete
+        
+        //Add Entry to Remote Session Table
+        if(communicate.createRemoteSession("jdeere", sessionID)){      
+            //Delete REMOTESESSION
+            communicate.deleteRemoteSession("jdeere", sessionID);
+            
+            //Start the uvnc viewer with session id
+            System.out.println("Session ID: "+sessionID);
+            Runtime rt = Runtime.getRuntime();
+            Process process = rt.exec("src/uvnc/vncviewer.exe -proxy joelknutson.asuscomm.com:5901 ID:"+sessionID);
+        
+        }else{
+            
+            System.out.println("Remote connection failed");
+        
+        }
+    
     }
     
     private void updateStatus(){

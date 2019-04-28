@@ -57,7 +57,7 @@ public class TechCommandCenterTicketSearchFormDetailsConfirmationController impl
             lblConfirmationMsg.setText("Are you sure you want to assign ticket id# "+ticketID+" to yourself?");
             System.out.println("Assign to me");
         }
-}
+    }
     @FXML
     private void confirm(MouseEvent event) throws IOException{
         if(request.equalsIgnoreCase("open")){

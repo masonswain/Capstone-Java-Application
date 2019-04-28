@@ -126,5 +126,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button id="Create User" fx:id="btnRemoteConnection" layoutX="691.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#remoteConnect" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: GREY; -fx-border-color: WHITE;" text="Remote Connection" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
