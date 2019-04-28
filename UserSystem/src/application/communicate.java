@@ -1636,13 +1636,14 @@ public class communicate {
             //System.out.println("Comma Point: "+commaPt);
             //If the session was created
             if(success>-1){
+                
                 boolean cont = true;
                 int i=0;
                 //Use checkCheckRemoteSession to determine when the remote host is ready for connection
                 //Attempt 6 times at 10 second intervals
                 while(cont && i<6){
                 
-                    if(checkRemoteSessionRequest(connName, true)){
+                    if(checkRemoteSessionRequest(connName, Main.currentUser.isAdmin)){
                     return true;
                     }else{
                     i++;
@@ -1750,15 +1751,15 @@ public class communicate {
         }
         
         in.close();
-            
-        //Debugging Line - server response text (this is the string that is parsed
-        //System.out.println("Server Response: "+response.toString());
            
         String serverResponse=response.toString();
-
+        //Debugging Line - server response text (this is the string that is parsed
+        System.out.println("Server Response: "+response.toString());
+        
         //Debugging Line - output the location of the comma or -1 if not found
         //System.out.println("Comma Point: "+commaPt);
 
+        
         if(admin){
             if(serverResponse.contains("ISREADY: 1")){
 
@@ -1770,16 +1771,91 @@ public class communicate {
                 //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
 
             }else{
-                    System.out.println("Not ready to connect");
+                    System.out.println("No connections found");
             }
         }else{
-            if(serverResponse.contains("ISREADY:")){
-                //Set ISREADY to 1
-                
+            if(serverResponse.contains("ISREADY: 0")){
+
+                int start = response.toString().indexOf("SESSION ID: ")+12;
+                System.out.println("Start"+start);
+                int end = response.toString().indexOf("<br/>",start);
+                System.out.println("End: "+end);
+                String sessionID = response.toString().substring(start,end);
+                System.out.println("Setting Session ID: "+sessionID+" to ready...");
+                if(setRemoteSessionToReady(connName,sessionID)){
+                    Runtime rt = Runtime.getRuntime();
+                    Process process1 = rt.exec("src/uvnc/winvnc.exe -kill");
+                    while(process1.isAlive()){}
+                    Process process2 = rt.exec("src/uvnc/winvnc.exe -sc_exit -connect joelknutson.asuscomm.com:5500 -autoreconnect -id:"+sessionID+" -run");
+                }
+                //Debug Line
+                System.out.println("Ready to connect");
+                isReady=true;
+
+                //Debugging Line - output object variables to prove object creation and variable assignment
+                //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
+
+            }else{
+                    System.out.println("No connections found");
             }
         }
             
         return isReady;    
+        
+    }
+    
+    public static boolean setRemoteSessionToReady(String connName, String sessionID) throws IOException{
+        
+        String inputFromURL = null;            
+            
+            //Reference to Sending GET Request and returning data
+            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+            //Example GET/POST Request URL
+            String url = "http://csc450.joelknutson.net/java/set-remote-session-ready.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+           
+            String urlParameters= "connName="+connName+"&sessionID="+sessionID;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + urlParameters);
+            //System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            
+            //Debugging Line - server response text (this is the string that is parsed
+            //System.out.println("Server Response: "+response.toString());
+            
+            int success=response.toString().indexOf("Session ID: "+sessionID+" ready");
+            System.out.println("Response: "+response.toString());
+            System.out.println("Success: "+success);
+            
+            //Debugging Line - output the location of the comma or -1 if not found
+            //System.out.println("Comma Point: "+commaPt);
+            //If the session was created
+            if(success>-1){
+                
+                return true;
+                
+            }else{    
+            System.out.println("setRemoteSessionToReady: Remote session not ready");
+            }
+            
+            return false;
         
     }
        

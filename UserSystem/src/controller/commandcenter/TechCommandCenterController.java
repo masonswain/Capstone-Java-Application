@@ -330,8 +330,14 @@ public class TechCommandCenterController implements Initializable {
     
     @FXML
     private void remoteConnect(MouseEvent event) throws IOException, InterruptedException{
-           
-        System.out.println(InetAddress.getLocalHost());
+         
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterRemoteConnectionUtility.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+        /*System.out.println(InetAddress.getLocalHost());
         //Create Session ID
         Random r = new Random();
         String sessionID = Integer.toString(r.nextInt(999999999));
@@ -353,7 +359,7 @@ public class TechCommandCenterController implements Initializable {
             System.out.println("Remote connection failed");
         
         }
-    
+    */
     }
     
     private void updateStatus(){

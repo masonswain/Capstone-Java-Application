@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -61,6 +62,7 @@ public class ViewTicketHistoryController implements Initializable {
     @FXML
     private Circle statusLight;
     
+    private boolean timerStop=false; 
     ArrayList<Note> listOfNotes;
 
     /**
@@ -69,13 +71,7 @@ public class ViewTicketHistoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        Internal.intializeWidgetStatus();
-
-        lblTicketsOpen.setText(Main.activeTicketCount);
-        lblMessagesWaiting.setText(Main.unreadMessageCount);
-        
-        //Update status light
-        statusLight.setFill(Main.statusLightColor);
+        updateStatus();
         
         try {
             listOfNotes=(communicate.getAllCurrentTicketNotesNewestToOldest(Main.ticket.getTicketID()));
@@ -88,6 +84,31 @@ public class ViewTicketHistoryController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ViewTicketHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Create a runnable that is capable of updating JavaFX elements
+        Runnable updater = new Runnable(){
+            @Override
+            public void run() {
+                updateStatus();
+            }
+        
+        };
+    
+        //Create a thread to loop until the timerStop is set to true
+        new Thread(()->{
+        int i=0;
+        while(!timerStop){
+        try{
+            Thread.sleep(Main.refreshTimer);
+                    
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+            i++;
+            System.out.println("Updating Status...");
+            Platform.runLater(updater);
+        }
+        }).start();
         
     }    
 
@@ -122,7 +143,7 @@ public class ViewTicketHistoryController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+        timerStop=true;    
         window.setScene(scene);
         window.show();
     }
@@ -157,7 +178,7 @@ public class ViewTicketHistoryController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+        timerStop=true;    
         window.setScene(scene);
         window.show();
     }
@@ -192,7 +213,7 @@ public class ViewTicketHistoryController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+        timerStop=true;    
         window.setScene(scene);
         window.show();
     }
@@ -227,7 +248,7 @@ public class ViewTicketHistoryController implements Initializable {
         });
         
         ////////////////////        END      //////////////////////////// 
-            
+        timerStop=true;    
         window.setScene(scene);
         window.show();
     }
@@ -262,9 +283,19 @@ public class ViewTicketHistoryController implements Initializable {
         });
         
         ////////////////////        END      //////////////////////////// 
-          
+        timerStop=true;  
         window.setScene(scene);
         window.show();
+    }
+    
+    private void updateStatus(){
+        Internal.intializeWidgetStatus();
+
+        lblTicketsOpen.setText(Main.activeTicketCount);
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+        
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
     }
     
 }

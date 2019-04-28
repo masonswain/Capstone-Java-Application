@@ -14,6 +14,7 @@ import application.communicate;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,16 +37,42 @@ public class WidgetCollapsedController implements Initializable {
 
     @FXML
     private Circle statusLight;
+    
+    boolean timerStop=false;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        Internal.intializeWidgetStatus();
+        //Update all dynamic elements in scene
+        updateStatus();
         
-        //Update status light
-        statusLight.setFill(Main.statusLightColor);
+        //Create a runnable that is capable of updating JavaFX elements
+        Runnable updater = new Runnable(){
+            @Override
+            public void run() {
+                updateStatus();
+            }
+        
+        };
+    
+        //Create a thread to loop until the timerStop is set to true
+        new Thread(()->{
+        int i=0;
+        while(!timerStop){
+        try{
+            Thread.sleep(Main.refreshTimer);
+                    
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+            i++;
+            System.out.println("Updating Status...");
+            Platform.runLater(updater);
+        }
+        }).start();
+        
     }    
 
     @FXML
@@ -78,9 +105,15 @@ public class WidgetCollapsedController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+            timerStop=true; 
             window.setScene(scene);
             window.show();
+    }
+    
+    private void updateStatus(){
+        Internal.intializeWidgetStatus();
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
     }
     
 }

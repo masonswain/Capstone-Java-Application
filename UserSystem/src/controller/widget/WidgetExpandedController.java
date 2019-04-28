@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,23 +52,51 @@ public class WidgetExpandedController implements Initializable {
     private Label lblTicketsOpen;
     @FXML
     private Circle statusLight;
+    
+    boolean timerStop=false;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+           
+        try {
+            //Update all dynamic elements in scene
+            updateStatus();
+        } catch (IOException ex) {
+            Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-            Internal.intializeWidgetStatus();
-            
-            //Update GUI count
-            lblTicketsOpen.setText(Main.activeTicketCount);
-            lblMessagesWaiting.setText(Main.unreadMessageCount);
-            
-            //Update status light
-            statusLight.setFill(Main.statusLightColor);
-
-         
+        //Create a runnable that is capable of updating JavaFX elements
+        Runnable updater = new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    updateStatus();
+                } catch (IOException ex) {
+                    Logger.getLogger(WidgetExpandedController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        
+        };
+    
+        //Create a thread to loop until the timerStop is set to true
+        new Thread(()->{
+        int i=0;
+        while(!timerStop){
+        try{
+            Thread.sleep(Main.refreshTimer);
+                    
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+            i++;
+            System.out.println("Updating Status...");
+            Platform.runLater(updater);
+        }
+        }).start();
+                   
     }
 
     @FXML
@@ -103,7 +132,7 @@ public class WidgetExpandedController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+            timerStop=true;
             window.setScene(scene);
             window.show();
     }
@@ -138,7 +167,7 @@ public class WidgetExpandedController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            
+            timerStop=true;
             window.setScene(scene);
             window.show();
     }
@@ -173,9 +202,22 @@ public class WidgetExpandedController implements Initializable {
         });
         
             ////////////////////        END      //////////////////////////// 
-            
+        timerStop=true;    
         window.setScene(scene);
         window.show();
     }
     
+    private void updateStatus() throws IOException{
+        Internal.intializeWidgetStatus();
+        
+        //Update GUI count
+        lblTicketsOpen.setText(Main.activeTicketCount);
+        lblMessagesWaiting.setText(Main.unreadMessageCount);
+            
+        //Update status light
+        statusLight.setFill(Main.statusLightColor);
+        
+        communicate.checkRemoteSessionRequest(Main.currentUser.getuName(), Main.currentUser.isAdmin);
+    
+    }    
 }

@@ -10,6 +10,7 @@ import static application.Main.xOffset;
 import static application.Main.yOffset;
 import application.communicate;
 import application.user;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -65,6 +66,12 @@ public void Login(ActionEvent event) throws Exception {
     //////////////////////   End Credential Entry Bypass   ////////////////////////// 
         
         if(Main.currentUser.authenticated) {
+            String hostname=InetAddress.getLocalHost().toString();
+            int delimiter=hostname.indexOf("/");
+            hostname=hostname.substring(0, delimiter);
+            Main.localHostname=hostname;
+            //output resulting system hostname to console
+            System.out.println(Main.localHostname);
             
             String fxmlFile="/fxml/widget/WidgetExpanded.fxml";
             String cssFile="/application/application.css";
