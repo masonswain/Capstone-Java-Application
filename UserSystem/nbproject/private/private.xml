@@ -3,15 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/fxml/commandcenter/TechCommandCenterTicketSearchForm.fxml</file>
-            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/application/communicate.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/OpenTicketController.java</file>
             <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/application/Main.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/LoginController.java</file>
             <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/ViewTicketsController.java</file>
-            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/commandcenter/TechCommandCenterOpenTicketFormController.java</file>
-            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/commandcenter/TechCommandCenterAssignTicketFormController.java</file>
-            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/commandcenter/TechCommandCenterTicketSearchFormController.java</file>
             <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/application/Internal.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/WidgetExpandedController.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/WidgetCollapsedController.java</file>
             <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/commandcenter/TechCommandCenterController.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/ReplyToTicketController.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/commandcenter/TechCommandCenterRemoteConnectionUtility.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/ViewTicketCommentController.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/application/communicate.java</file>
+            <file>file:/C:/Users/Joel/Documents/GitHub/Capstone-Java-Application/UserSystem/src/controller/widget/ViewTicketHistoryController.java</file>
         </group>
     </open-files>
 </project-private>

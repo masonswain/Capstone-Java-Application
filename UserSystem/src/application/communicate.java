@@ -208,6 +208,69 @@ public class communicate {
         return user;
     }
     
+    public static String getUserPWByUN(String uName) throws IOException{
+    
+        String pw=null;
+        String inputFromURL = null;
+           
+        int startSub=0;
+        int endSub=0;
+                       
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/return-pw-by-username.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "un="+uName+"&key="+Main.key;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+            
+        int responseCode = conn.getResponseCode();
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
+            
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+        }
+        
+        in.close();
+            
+        //Debugging Line - server response text (this is the string that is parsed
+        //System.out.println("Server Response: "+response.toString());
+            
+        String serverResponse=response.toString();
+
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+
+        if(!serverResponse.contains("AUTHENTICATION FAILED")){
+    
+            System.out.println("Server Response: "+response.toString());
+            //Find fName information
+            startSub = serverResponse.indexOf("Password: ",startSub)+10;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            pw = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            //System.out.println("First Name: "+fName);
+        }else{
+           System.out.println("Authentication Failed");
+        }
+        
+        
+        return pw;
+    }
+    
     public static ArrayList<user> getListOfAdmins() throws IOException{
     
         ArrayList<user> adminList = new ArrayList();
@@ -314,6 +377,7 @@ public class communicate {
         String fName;
         String lName;
         String uName;
+        String isAdmin;
         int adminCount=0;
         int fromIndex=0;
             
@@ -384,15 +448,21 @@ public class communicate {
             uName = serverResponse.substring(startSub,endSub);
             //Debug Line
             //System.out.println("Username: "+uName);
+            //Find isAdmin information
+            startSub = serverResponse.indexOf("Admin: ",startSub)+7;
+            endSub = serverResponse.indexOf("<br/>",startSub);
+            isAdmin = serverResponse.substring(startSub,endSub);
+            //Debug Line
+            //System.out.println("Username: "+uName);
 
             //update user object
             user.fName = fName;
             user.lName = lName;
             user.uName = uName;
-            user.isAdmin = uName.equalsIgnoreCase("Y");
+            user.isAdmin = isAdmin.equalsIgnoreCase("Y");
             user.authenticated = (fName!=null);
 
-            userList.add(new user(fName, lName, uName, true, false));
+            userList.add(new user(user.fName, user.lName, user.uName, user.isAdmin, false));
             //adminList.add(user);
             //Debugging Line - output object variables to prove object creation and variable assignment
             //System.out.println("Hello "+loggedInUser.getfName()+" "+loggedInUser.getlName());
@@ -419,7 +489,7 @@ public class communicate {
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
             conn.setRequestMethod("POST");
            
-            String urlParameters= "fname="+fName+"&lname="+lName+"&uname="+uName+"&authpw="+authPW+"&isAdmin="+isAdmin;
+            String urlParameters= "fname="+fName+"&lname="+lName+"&uname="+uName+"&authpw="+authPW+"&isadmin="+isAdmin;
             
             conn.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
@@ -449,6 +519,116 @@ public class communicate {
             if(success>-1){
                 result=true; 
             }
+        
+        return result;
+    }
+    
+    public static boolean updateUser(String fName, String lName, String uName,String authPW, String isAdmin) throws IOException{
+    
+        boolean result = false;
+        
+        String inputFromURL = null;            
+            
+            //Reference to Sending GET Request and returning data
+            //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+            //Example GET/POST Request URL
+            String url = "http://csc450.joelknutson.net/java/update-user.php";
+            
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setRequestMethod("POST");
+           
+            String urlParameters= "fname="+fName+"&lname="+lName+"&uname="+uName+"&authpw="+authPW+"&isadmin="+isAdmin;
+            
+            conn.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            
+            int responseCode = conn.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+            }
+            in.close();
+            
+            //Debugging Line - server response text (this is the string that is parsed
+            System.out.println("Server Response: "+response.toString());
+            
+            int success=response.toString().indexOf("User: "+fName+" "+lName+" updated successfully");
+            
+            //Debugging Line - output the location of the comma or -1 if not found
+            //System.out.println("Comma Point: "+commaPt);
+            if(success>-1){
+                result=true; 
+            }
+        
+        return result;
+    }
+    
+    public static boolean deleteUser(String uName, String key) throws IOException{
+    
+        boolean result=false;
+        String inputFromURL = null;
+           
+        int startSub=0;
+        int endSub=0;
+                       
+        //Reference to Sending GET Request and returning data
+        //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+        //Example GET/POST Request URL
+        String url = "http://csc450.joelknutson.net/java/delete-user-by-username.php";
+            
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("POST");
+           
+        String urlParameters= "un="+uName+"&key="+Main.key;
+            
+        conn.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.writeBytes(urlParameters);
+        wr.flush();
+        wr.close();
+            
+        int responseCode = conn.getResponseCode();
+	//System.out.println("\nSending 'POST' request to URL : " + url);
+	//System.out.println("Post parameters : " + urlParameters);
+	//System.out.println("Response Code : " + responseCode);
+            
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        while((inputFromURL = in.readLine())!=null){
+            response.append(inputFromURL);
+        }
+        
+        in.close();
+            
+        //Debugging Line - server response text (this is the string that is parsed
+        //System.out.println("Server Response: "+response.toString());
+            
+        String serverResponse=response.toString();
+
+        //Debugging Line - output the location of the comma or -1 if not found
+        //System.out.println("Comma Point: "+commaPt);
+
+        if(!serverResponse.contains("AUTHENTICATION FAILED")){
+    
+            System.out.println("Server Response: "+response.toString());
+            //Find fName information
+            result=true;
+            //Debug Line
+            //System.out.println("First Name: "+fName);
+        }else{
+           System.out.println("Authentication Failed");
+        }
+        
         
         return result;
     }

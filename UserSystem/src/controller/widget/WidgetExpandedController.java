@@ -207,6 +207,13 @@ public class WidgetExpandedController implements Initializable {
         window.show();
     }
     
+    @FXML
+    private void closeWidget(MouseEvent event){
+        //Exit Program
+        timerStop=true;
+        System.exit(0);
+    }
+    
     private void updateStatus() throws IOException{
         Internal.intializeWidgetStatus();
         

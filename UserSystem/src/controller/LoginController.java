@@ -95,6 +95,7 @@ public void Login(ActionEvent event) throws Exception {
             Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
             
             if(Main.currentUser.isAdmin){
+                Main.key="715DA991DAD67FB55A6296814A16F";
                 //Set screen in middle of primary screen
                 window.setX((primaryScreenBounds.getWidth()/2) - 500);
                 window.setY((primaryScreenBounds.getHeight()/2) - 300);

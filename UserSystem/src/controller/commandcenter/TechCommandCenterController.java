@@ -317,6 +317,18 @@ public class TechCommandCenterController implements Initializable {
     }
     
     @FXML
+    private void newModifyUserForm(MouseEvent event) throws IOException{
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterModifyUserForm.fxml")); 
+        Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
+    
+    }
+    
+    @FXML
     private void ticketSearchForm(MouseEvent event) throws IOException{
     
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/commandcenter/TechCommandCenterTicketSearchForm.fxml")); 
@@ -337,29 +349,6 @@ public class TechCommandCenterController implements Initializable {
         Stage window = new Stage();
         window.setScene(scene);
         window.show();
-        /*System.out.println(InetAddress.getLocalHost());
-        //Create Session ID
-        Random r = new Random();
-        String sessionID = Integer.toString(r.nextInt(999999999));
-        
-        //Check if entry exists and delete
-        
-        //Add Entry to Remote Session Table
-        if(communicate.createRemoteSession("jdeere", sessionID)){      
-            //Delete REMOTESESSION
-            communicate.deleteRemoteSession("jdeere", sessionID);
-            
-            //Start the uvnc viewer with session id
-            System.out.println("Session ID: "+sessionID);
-            Runtime rt = Runtime.getRuntime();
-            Process process = rt.exec("src/uvnc/vncviewer.exe -proxy joelknutson.asuscomm.com:5901 ID:"+sessionID);
-        
-        }else{
-            
-            System.out.println("Remote connection failed");
-        
-        }
-    */
     }
     
     private void updateStatus(){

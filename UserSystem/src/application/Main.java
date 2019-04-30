@@ -37,6 +37,7 @@ public class Main extends Application { // Main class extends Application
     public static int refreshTimer=10000;
     
     public static String localHostname;
+    public static String key=null;
     
      //start method
     

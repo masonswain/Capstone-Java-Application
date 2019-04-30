@@ -59,7 +59,7 @@ public class TechCommandCenterCreateUserFormController implements Initializable 
     private void submit(MouseEvent event) throws IOException{
         
         //System.out.println(cbAdmin.getSelectionModel().getSelectedItem().toString());
-        if(communicate.createNewUser(txtFName.getText(), txtLName.getText(), txtUName.getText(), txtAuthPW.getText(), cbAdmin.toString())){
+        if(communicate.createNewUser(txtFName.getText(), txtLName.getText(), txtUName.getText(), txtAuthPW.getText(), cbAdmin.getSelectionModel().getSelectedItem().toString())){
         System.out.println("Account Created Successfully");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
