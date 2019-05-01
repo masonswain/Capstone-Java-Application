@@ -117,7 +117,7 @@ public class TechCommandCenterDetailsController implements Initializable {
     @FXML
     private void closeCommandCenter(){
         //Exit Program
-        timerStop=false;
+        timerStop=true;
         System.exit(0);
     }
     
@@ -153,7 +153,7 @@ public class TechCommandCenterDetailsController implements Initializable {
             });
         
             ////////////////////        END      //////////////////////////// 
-            timerStop=false;
+            timerStop=true;
             window.setScene(scene);
             window.show();
     }
@@ -187,7 +187,7 @@ public class TechCommandCenterDetailsController implements Initializable {
         
         ////////////////////        END      //////////////////////////// 
         
-        timerStop=false;
+        timerStop=true;
         //Set Scene and Show
         window.setScene(scene);
         window.show();

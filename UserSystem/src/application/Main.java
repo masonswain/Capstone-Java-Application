@@ -34,7 +34,7 @@ public class Main extends Application { // Main class extends Application
     
     public static Color statusLightColor=GREEN;
     //Refresh Timer in ms ie. 10000ms == 10s 
-    public static int refreshTimer=10000;
+    public static int refreshTimer=15000;
     
     public static String localHostname;
     public static String key=null;
