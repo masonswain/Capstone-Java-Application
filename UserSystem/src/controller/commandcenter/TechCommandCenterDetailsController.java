@@ -260,9 +260,6 @@ public class TechCommandCenterDetailsController implements Initializable {
         isAssigned=true;
         
         communicate.assignTicket(Main.currentUser.getuName(), selectedTicket.getTicketID());
-        
-        //refreshTechCommandCenterDetails(event);
-        //gotoTechCommandCenter(event);
         updateStatus();
         taTicketHistory.home();
         
@@ -310,7 +307,7 @@ public class TechCommandCenterDetailsController implements Initializable {
         communicate.createTicketNote(selectedTicket.getTicketID(), Main.currentUser.getuName(), taTicketReply.getText());
         updateStatus();
         taTicketHistory.home();
-        //refreshTechCommandCenterDetails(event);
+        taTicketReply.clear();
     }
         
     private void updateStatus(){
@@ -342,8 +339,6 @@ public class TechCommandCenterDetailsController implements Initializable {
         
         //Build and populate the text area that holds the notes history
         try {
-            //Debugging Line
-            //System.out.println("Checking for UN:"+Main.unassignedTicketList.get(selectedIndex).getUserUN());
             
             //Get the user object for the username associated with the ticket
             endUser=communicate.getUserByUN(selectedTicket.getUserUN());
